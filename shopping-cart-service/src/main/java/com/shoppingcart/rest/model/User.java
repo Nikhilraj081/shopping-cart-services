@@ -1,8 +1,15 @@
 package com.shoppingcart.rest.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
+@Entity
 public class User {
 
+	@Id
+	@GeneratedValue
+	@Ent
 	private int userId;
 	private String userName;
 	private String userMobileNo;
