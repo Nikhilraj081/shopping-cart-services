@@ -1,9 +1,10 @@
 package com.shoppingcart.rest.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class User {
@@ -15,6 +16,23 @@ public class User {
 	private String userMobileNo;
 	private String userEmailId;
 	private String userPassword;
+	
+
+	public User(int userId, String userName, String userMobileNo, String userEmailId, String userPassword) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userMobileNo = userMobileNo;
+		this.userEmailId = userEmailId;
+		this.userPassword = userPassword;
+	}
+	
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 
 	public int getUserId() {
 		return userId;
