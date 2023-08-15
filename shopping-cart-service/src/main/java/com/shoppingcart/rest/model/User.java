@@ -1,5 +1,6 @@
 package com.shoppingcart.rest.model;
 
+
 public class User {
 
 	private int userId;

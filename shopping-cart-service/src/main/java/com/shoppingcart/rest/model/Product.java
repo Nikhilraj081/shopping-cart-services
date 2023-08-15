@@ -7,6 +7,14 @@ public class Product {
 	private int productPrice;
 	private Seller seller;
 
+	public Seller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
+	}
+
 	public int getProductId() {
 		return productId;
 	}
