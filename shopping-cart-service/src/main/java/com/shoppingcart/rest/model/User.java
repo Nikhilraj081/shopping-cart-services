@@ -16,23 +16,20 @@ public class User {
 	private String userMobileNo;
 	private String userEmailId;
 	private String userPassword;
-	
 
-	public User(int userId, String userName, String userMobileNo, String userEmailId, String userPassword) {
+	public User(String userName, String userMobileNo, String userEmailId, String userPassword) {
 		super();
-		this.userId = userId;
 		this.userName = userName;
 		this.userMobileNo = userMobileNo;
 		this.userEmailId = userEmailId;
 		this.userPassword = userPassword;
+
+
 	}
 	
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-
-
 
 	public int getUserId() {
 		return userId;

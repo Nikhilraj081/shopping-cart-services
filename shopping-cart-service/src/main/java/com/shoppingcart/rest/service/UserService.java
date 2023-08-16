@@ -16,4 +16,20 @@ public class UserService {
     {
         return userRepository.findById(id);
     }
+
+    //save user registration data
+    public User setUser(User user)
+    {
+        return userRepository.save(user);
+    }
+
+    //update user data
+    public User updateUserData(User user, int id)
+    {
+        if(getUserById(id)!=null)
+        {
+            return userRepository.save(user);
+        }
+        return null;
+    }
 }
