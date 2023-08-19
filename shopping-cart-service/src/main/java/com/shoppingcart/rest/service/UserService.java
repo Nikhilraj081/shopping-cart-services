@@ -26,7 +26,8 @@ public class UserService {
     //update user data
     public User updateUserData(User user, int id)
     {
-        if(getUserById(id)!=null)
+        user.setUserId(id);
+        if(getUserById(id) != null)
         {
             return userRepository.save(user);
         }

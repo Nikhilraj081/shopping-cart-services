@@ -27,24 +27,22 @@ public class UserController {
     }
     
 	@GetMapping("/user/{id}")
-    public ResponseEntity<User> getUser(@PathVariable("id") int id)
-    {
+    public ResponseEntity<User> getUser(@PathVariable("id") int id) {
         User user = userService.getUserById(id);
-        if(user==null)
-        {
+        if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return  ResponseEntity.of(Optional.of(user));
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @PutMapping("/user/update/{id}")
-    public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable("id") int id)
+    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable("id") int id)
     {
        User userDetails = userService.updateUserData(user, id);
        if(userDetails==null)
        {
-           return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+           return ResponseEntity.status(HttpStatus.ACCEPTED).body("Id is not valid or something wrong in body");
        }
-       return ResponseEntity.status(HttpStatus.CREATED).build();
+       return ResponseEntity.status(HttpStatus.CREATED).body("User data updated successfully");
     }
 }

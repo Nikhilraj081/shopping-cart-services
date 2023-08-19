@@ -1,10 +1,17 @@
 package com.shoppingcart.rest.model;
 
+import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
+
+@Entity
 public class Product {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int productId;
 	private String productName;
 	private String productCategory;
 	private int productPrice;
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Seller seller;
 
 	public Seller getSeller() {
