@@ -1,10 +1,9 @@
 package com.shoppingcart.rest.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class User {
@@ -16,6 +15,10 @@ public class User {
 	private String userMobileNo;
 	private String userEmailId;
 	private String userPassword;
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "USER_ROLE", joinColumns = {@JoinColumn(name = "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "USER_ROLE")})
+	private Set<Role> role;
 
 	public User(String userName, String userMobileNo, String userEmailId, String userPassword) {
 		super();
@@ -71,4 +74,11 @@ public class User {
 		this.userPassword = userPassword;
 	}
 
+	public Set<Role> getRole() {
+		return role;
+	}
+
+	public void setRole(Set<Role> role) {
+		this.role = role;
+	}
 }
