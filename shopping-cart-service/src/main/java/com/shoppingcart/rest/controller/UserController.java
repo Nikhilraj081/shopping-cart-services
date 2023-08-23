@@ -10,23 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     UserService userService;
 
-    @PostMapping("/user/register")
-    public ResponseEntity<?> userRegister(@RequestBody User user)
-    {
-        User userDetails = userService.setUser(user);
-        if(userDetails==null)
-        {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-    
-	@GetMapping("/user/{id}")
+	@GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable("id") int id) {
         User user = userService.getUserById(id);
         if (user == null) {
@@ -35,7 +25,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
-    @PutMapping("/user/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable("id") int id)
     {
        User userDetails = userService.updateUserData(user, id);

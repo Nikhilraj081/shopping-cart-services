@@ -1,9 +1,13 @@
 package com.shoppingcart.rest.service;
 
 import com.shoppingcart.rest.dao.UserRepository;
+import com.shoppingcart.rest.model.Role;
 import com.shoppingcart.rest.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -20,7 +24,11 @@ public class UserService {
     //save user registration data
     public User setUser(User user)
     {
-        return userRepository.save(user);
+        if(user != null)
+        {
+            return userRepository.save(user);
+        }
+        return null;
     }
 
     //update user data
