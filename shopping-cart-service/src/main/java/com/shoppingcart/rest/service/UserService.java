@@ -4,6 +4,8 @@ import com.shoppingcart.rest.dao.UserRepository;
 import com.shoppingcart.rest.model.Role;
 import com.shoppingcart.rest.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -15,6 +17,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     //get user by id
     public User getUserById(int id)
     {
@@ -24,6 +29,7 @@ public class UserService {
     //save user registration data
     public User setUser(User user)
     {
+        user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
         if(user != null)
         {
             return userRepository.save(user);
