@@ -1,6 +1,8 @@
 package com.shoppingcart.rest.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +22,7 @@ public class User implements UserDetails {
 	private String userPassword;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "USER_ROLE", joinColumns = {@JoinColumn(name = "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "USER_ROLE")})
+	@JoinTable(name = "USER_ROLE", joinColumns = {@JoinColumn(name = "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
 	private Set<Role> role;
 
 	public User(String userName, String userMobileNo, String userEmailId, String userPassword) {
@@ -69,10 +71,11 @@ public class User implements UserDetails {
 		this.userEmailId = userEmailId;
 	}
 
+	@JsonIgnore
 	public String getUserPassword() {
 		return userPassword;
 	}
-
+	@JsonProperty
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
@@ -85,16 +88,19 @@ public class User implements UserDetails {
 		this.role = role;
 	}
 
+	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
 	}
 
+	@JsonIgnore
 	@Override
 	public String getPassword() {
 		return userPassword;
 	}
 
+	@JsonIgnore
 	@Override
 	public String getUsername() {
 		return userEmailId;
@@ -115,6 +121,7 @@ public class User implements UserDetails {
 		return true;
 	}
 
+	@JsonIgnore
 	@Override
 	public boolean isEnabled() {
 		return true;
