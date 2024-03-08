@@ -1,10 +1,13 @@
 package com.shoppingcart.rest.shoppingcartservice.Model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Product {
@@ -17,14 +20,15 @@ public class Product {
     private double price;
     @ManyToOne
     private Seller seller;
-    @ManyToOne
-    private Cart cart;
-    @ManyToOne
-    private WishList wishList;
+    @OneToMany(mappedBy = "product")
+    private List<Cart> cart;
+    @OneToMany(mappedBy = "product")
+    private List<WishList> wishList;
+    @OneToMany(mappedBy = "product")
+    private List<Order> order;
 
-   
     public Product(int productId, String productName, String productCategory, double price, Seller seller,
-            Cart cart, WishList wishList) {
+            List<Cart> cart, List<WishList> wishList, List<Order> order) {
         this.productId = productId;
         this.productName = productName;
         this.productCategory = productCategory;
@@ -32,6 +36,7 @@ public class Product {
         this.seller = seller;
         this.cart = cart;
         this.wishList = wishList;
+        this.order = order;
     }
 
 
@@ -89,23 +94,33 @@ public class Product {
     }
 
 
-    public Cart getCart() {
+    public List<Cart> getCart() {
         return cart;
     }
 
 
-    public void setCart(Cart cart) {
+    public void setCart(List<Cart> cart) {
         this.cart = cart;
     }
 
 
-    public WishList getWishList() {
+    public List<WishList> getWishList() {
         return wishList;
     }
 
 
-    public void setWishList(WishList wishList) {
+    public void setWishList(List<WishList> wishList) {
         this.wishList = wishList;
+    }
+
+
+    public List<Order> getOrder() {
+        return order;
+    }
+
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
     }
 
     

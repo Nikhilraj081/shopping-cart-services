@@ -1,5 +1,7 @@
 package com.shoppingcart.rest.shoppingcartservice.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,19 +17,21 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int orderId;
     @ManyToOne
+    @JsonBackReference
     private User user;
     private String date;
-    private double price;
-    private String size;
-    private String color;
+    @ManyToOne
+    private Product product;
+    private int quantity;
 
-    public Order(int orderId, User user, String date, double price, String size, String color) {
+   
+
+    public Order(int orderId, User user, String date, Product product, int quantity) {
         this.orderId = orderId;
         this.user = user;
         this.date = date;
-        this.price = price;
-        this.size = size;
-        this.color = color;
+        this.product = product;
+        this.quantity = quantity;
     }
 
     public Order() {
@@ -57,28 +61,26 @@ public class Order {
         this.date = date;
     }
 
-    public double getPrice() {
-        return price;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public Product getProduct() {
+        return product;
     }
 
-    public String getSize() {
-        return size;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public String getColor() {
-        return color;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
+    
 
 }

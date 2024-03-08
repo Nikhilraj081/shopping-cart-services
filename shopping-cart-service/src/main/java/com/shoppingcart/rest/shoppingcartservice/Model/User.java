@@ -2,6 +2,8 @@ package com.shoppingcart.rest.shoppingcartservice.Model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,12 +22,16 @@ public class User {
     private String userEmailId;
     private String userPassword;
     @OneToOne(mappedBy = "user")
+    @JsonManagedReference
     private Cart cart;
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Order> order;
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Address> address;
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<WishList> wishList;
 
     public User(int userId, String userName, String userMobileNo, String userEmailId, String userPassword, Cart cart,

@@ -1,12 +1,13 @@
 package com.shoppingcart.rest.shoppingcartservice.Model;
 
-import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -15,13 +16,14 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int cartId;
-    @OneToMany(mappedBy = "cart")
-    private List<Product> product;
+    @ManyToOne
+    private Product product;
     @OneToOne
+    @JsonBackReference
     private User user;
     private int quantity;
 
-    public Cart(int cartId, List<Product> product, User user, int quantity) {
+    public Cart(int cartId, Product product, User user, int quantity) {
         this.cartId = cartId;
         this.product = product;
         this.user = user;
@@ -39,11 +41,11 @@ public class Cart {
         this.cartId = cartId;
     }
 
-    public List<Product> getProduct() {
+    public Product getProduct() {
         return product;
     }
 
-    public void setProduct(List<Product> product) {
+    public void setProduct(Product product) {
         this.product = product;
     }
 

@@ -39,7 +39,7 @@ public class UserController {
 
         if(userDetails == null)
         {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Id is not valid or something wrong in body");
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Body is not valid");
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body("User data updated successfully");
