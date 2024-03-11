@@ -1,6 +1,7 @@
 package com.shoppingcart.rest.shoppingcartservice.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +22,7 @@ public class Order {
     private User user;
     private String date;
     @ManyToOne
+    @JsonManagedReference
     private Product product;
     private int quantity;
 

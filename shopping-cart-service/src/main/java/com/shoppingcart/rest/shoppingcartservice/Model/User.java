@@ -21,21 +21,21 @@ public class User {
     private String userMobileNo;
     private String userEmailId;
     private String userPassword;
-    @OneToOne(mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private Cart cart;
+    private List<Cart> cart;
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<Order> order;
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<Address> address;
-    @OneToOne(mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private WishList wishList;
+    private List<WishList> wishList;
 
-    public User(int userId, String userName, String userMobileNo, String userEmailId, String userPassword, Cart cart,
-           List<Order> order, List<Address> address, WishList wishList) {
+    public User(int userId, String userName, String userMobileNo, String userEmailId, String userPassword, List<Cart> cart,
+           List<Order> order, List<Address> address, List<WishList> wishList) {
         this.userId = userId;
         this.userName = userName;
         this.userMobileNo = userMobileNo;
@@ -90,11 +90,11 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public Cart getCart() {
+    public List<Cart> getCart() {
         return cart;
     }
 
-    public void setCart(Cart cart) {
+    public void setCart(List<Cart> cart) {
         this.cart = cart;
     }
 
@@ -114,11 +114,11 @@ public class User {
         this.address = address;
     }
 
-    public WishList getWishList() {
+    public List<WishList> getWishList() {
         return wishList;
     }
 
-    public void setWishList(WishList wishList) {
+    public void setWishList(List<WishList> wishList) {
         this.wishList = wishList;
     }
 

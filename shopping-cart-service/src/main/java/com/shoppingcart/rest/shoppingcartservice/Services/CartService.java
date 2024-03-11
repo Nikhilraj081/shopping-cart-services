@@ -1,5 +1,7 @@
 package com.shoppingcart.rest.shoppingcartservice.Services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ public class CartService {
     @Autowired
     CartRepository cartRepository;
 
-    public Cart getCartById(int userId)
+    public List<Cart> getCartById(int userId)
     {
         return cartRepository.findByUserUserId(userId);
     }

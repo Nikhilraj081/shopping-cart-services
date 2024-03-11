@@ -1,5 +1,7 @@
 package com.shoppingcart.rest.shoppingcartservice.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +22,9 @@ public class CartController {
     CartService cartService;
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getCart(@PathVariable("userId") int userId)
+    public ResponseEntity<?> getCartByUserId(@PathVariable("userId") int userId)
     {
-        Cart cart = cartService.getCartById(userId);
+        List<Cart> cart = cartService.getCartById(userId);
         if(cart!=null)
         {
             return ResponseEntity.status(HttpStatus.OK).body(cart);

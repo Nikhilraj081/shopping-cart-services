@@ -27,8 +27,10 @@ public class Product {
     @JsonBackReference
     private List<Cart> cart;
     @OneToMany(mappedBy = "product")
+    @JsonBackReference
     private List<WishList> wishList;
     @OneToMany(mappedBy = "product")
+    @JsonBackReference
     private List<Order> order;
 
     public Product(int productId, String productName, String productCategory, double price, Seller seller,

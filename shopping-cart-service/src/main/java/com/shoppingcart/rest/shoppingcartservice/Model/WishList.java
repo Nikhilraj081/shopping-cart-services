@@ -1,11 +1,13 @@
 package com.shoppingcart.rest.shoppingcartservice.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 
 @Entity
 public class WishList {
@@ -14,8 +16,10 @@ public class WishList {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int wishListId;
     @ManyToOne
+    @JsonManagedReference
     private Product product;
-   @OneToOne
+   @ManyToOne
+   @JsonBackReference
     private User user;
 
 
