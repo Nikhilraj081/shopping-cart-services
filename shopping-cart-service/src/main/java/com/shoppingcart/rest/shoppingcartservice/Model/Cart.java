@@ -1,12 +1,20 @@
 package com.shoppingcart.rest.shoppingcartservice.Model;
 
+import java.util.List;
+
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Cart {
@@ -14,19 +22,21 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int cartId;
-    @ManyToOne
-    @JsonManagedReference
-    private Product product;
-    @ManyToOne
-    @JsonBackReference
+    @OneToOne
+    @JsonBackReference(value = "cart-user")
     private User user;
-    private int quantity;
+    @OneToMany(mappedBy = "cart")
+    @JsonManagedReference(value = "cartitem-cart")
+    private List<CartItem> cartItem;
+    private double totalPrice;
+    private double discount;
 
-    public Cart(int cartId, Product product, User user, int quantity) {
+    public Cart(int cartId, User user, List<CartItem> cartItem, double totalPrice, double discount) {
         this.cartId = cartId;
-        this.product = product;
         this.user = user;
-        this.quantity = quantity;
+        this.cartItem = cartItem;
+        this.totalPrice = totalPrice;
+        this.discount = discount;
     }
 
     public Cart() {
@@ -40,14 +50,6 @@ public class Cart {
         this.cartId = cartId;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
     public User getUser() {
         return user;
     }
@@ -56,12 +58,28 @@ public class Cart {
         this.user = user;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    } 
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public List<CartItem> getCartItem() {
+        return cartItem;
+    }
+
+    public void setCartItem(List<CartItem> cartItem) {
+        this.cartItem = cartItem;
+    }
 
 }

@@ -8,5 +8,7 @@ import com.shoppingcart.rest.shoppingcartservice.Model.Cart;
 
 public interface CartRepository extends JpaRepository<Cart, Integer> {
 
-    public List<Cart> findByUserUserId(int userId);
+    public Cart findByUserUserId(int userId);
+
+    public Cart findById(int id);
 }

@@ -1,5 +1,7 @@
 package com.shoppingcart.rest.shoppingcartservice.Model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -8,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class WishList {
@@ -15,17 +19,16 @@ public class WishList {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int wishListId;
-    @ManyToOne
-    @JsonManagedReference
-    private Product product;
-   @ManyToOne
-   @JsonBackReference
+    @OneToMany(mappedBy = "wishList")
+    @JsonManagedReference(value = "wishlistitem-wishlist")
+    private List<WishListItem> wishListItem;
+    @OneToOne
+    @JsonBackReference(value = "wishlist-user")
     private User user;
 
-
-    public WishList(int wishListId, Product product, User user) {
+    public WishList(int wishListId, List<WishListItem> wishListItem, User user) {
         this.wishListId = wishListId;
-        this.product = product;
+        this.wishListItem = wishListItem;
         this.user = user;
     }
 
@@ -40,12 +43,12 @@ public class WishList {
         this.wishListId = wishListId;
     }
 
-    public Product getProduct() {
-        return product;
+    public List<WishListItem> getWishListItem() {
+        return wishListItem;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setWishListItem(List<WishListItem> wishListItem) {
+        this.wishListItem = wishListItem;
     }
 
     public User getUser() {
@@ -55,8 +58,5 @@ public class WishList {
     public void setUser(User user) {
         this.user = user;
     }
-
-    
-
-    
+ 
 }

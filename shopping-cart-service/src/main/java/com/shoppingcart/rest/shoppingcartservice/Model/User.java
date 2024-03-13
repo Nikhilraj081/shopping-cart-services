@@ -4,11 +4,13 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class User {
@@ -20,21 +22,21 @@ public class User {
     private String userMobileNo;
     private String userEmailId;
     private String userPassword;
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference
-    private List<Cart> cart;
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "cart-user")
+    private Cart cart;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "order-user")
     private List<Order> order;
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "address-user")
     private List<Address> address;
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference
-    private List<WishList> wishList;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "wishlist-user")
+    private WishList wishList;
 
-    public User(int userId, String userName, String userMobileNo, String userEmailId, String userPassword, List<Cart> cart,
-           List<Order> order, List<Address> address, List<WishList> wishList) {
+    public User(int userId, String userName, String userMobileNo, String userEmailId, String userPassword, Cart cart,
+           List<Order> order, List<Address> address, WishList wishList) {
         this.userId = userId;
         this.userName = userName;
         this.userMobileNo = userMobileNo;
@@ -89,11 +91,11 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public List<Cart> getCart() {
+    public Cart getCart() {
         return cart;
     }
 
-    public void setCart(List<Cart> cart) {
+    public void setCart(Cart cart) {
         this.cart = cart;
     }
 
@@ -113,11 +115,11 @@ public class User {
         this.address = address;
     }
 
-    public List<WishList> getWishList() {
+    public WishList getWishList() {
         return wishList;
     }
 
-    public void setWishList(List<WishList> wishList) {
+    public void setWishList(WishList wishList) {
         this.wishList = wishList;
     }
 

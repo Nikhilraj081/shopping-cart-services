@@ -19,8 +19,14 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public Product getProductById(int id)
+    {
+        return productRepository.findById(id);
+    }
+
     public Product setProduct(Product product)
     {
+        product.setSpecialPrice(product.getPrice() - product.getDiscount());
         if(product!=null)
         {
             return productRepository.save(product);

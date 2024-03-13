@@ -35,15 +35,8 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity <?> SetUser(@RequestBody User user)
     {
-        User userDetails = userService.SetUser(user);
-
-        if(userDetails == null)
-        {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Id is not valid or something wrong in body");
-        }
-
-        return ResponseEntity.status(HttpStatus.CREATED).body("User data updated successfully");
-
+        String string = userService.SetUser(user);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(string);
     }
 
 }

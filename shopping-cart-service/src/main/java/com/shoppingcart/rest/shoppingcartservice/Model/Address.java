@@ -20,7 +20,7 @@ public class Address {
     private String state;
     private String city;
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "address-user")
     private User user;
     private String addressType;
 

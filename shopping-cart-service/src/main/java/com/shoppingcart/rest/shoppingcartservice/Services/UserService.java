@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shoppingcart.rest.shoppingcartservice.Dao.UserRepository;
+import com.shoppingcart.rest.shoppingcartservice.Model.Cart;
 import com.shoppingcart.rest.shoppingcartservice.Model.User;
+import com.shoppingcart.rest.shoppingcartservice.Model.WishList;
 
 @Service
 public class UserService {
@@ -18,14 +20,26 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User SetUser(User user)
+    public String SetUser(User user)
     {
         if(user!=null)
         {
-            return userRepository.save(user);
+            //set cart
+            Cart cart = new Cart();
+            cart.setUser(user);
+            user.setCart(cart);
+
+            //set wishlist
+            WishList wishlist = new WishList();
+            wishlist.setUser(user);
+            user.setWishList(wishlist);
+
+            userRepository.save(user);
+            
+            return "user added";
         }
 
-        return null;
+        return "invalid body";
     }
 
 

@@ -20,7 +20,7 @@ public class Seller {
     private String sellerName;
     private String sellerAddress;
     @OneToMany(mappedBy = "seller")
-    @JsonManagedReference
+    @JsonManagedReference(value = "product-seller")
     private List<Product> product;
     
     public Seller(int sellerId, String sellerName, String sellerAddress, List<Product> product) {
