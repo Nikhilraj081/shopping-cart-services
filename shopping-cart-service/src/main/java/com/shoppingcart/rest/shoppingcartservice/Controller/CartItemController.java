@@ -34,17 +34,4 @@ public class CartItemController {
         
     }
 
-    // @PostMapping("/user/{id}")
-    // public ResponseEntity<?> setCartItem(@RequestBody CartItem cartitem, @PathVariable("id") int id)
-    // {
-    //     CartItem cartDetails = cartService.setCartItem(id, cartitem);
-    //     if(cartDetails!=null)
-    //     {
-    //         return ResponseEntity.status(HttpStatus.CREATED).body(cartDetails);
-    //     }
-    //     return ResponseEntity.status(HttpStatus.ACCEPTED).body("invalid body");
-
-    // }
-
-
 }
