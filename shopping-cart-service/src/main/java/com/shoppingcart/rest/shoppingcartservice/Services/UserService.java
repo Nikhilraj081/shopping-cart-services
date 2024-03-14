@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shoppingcart.rest.shoppingcartservice.Dao.UserRepository;
+import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundException;
 import com.shoppingcart.rest.shoppingcartservice.Model.Cart;
 import com.shoppingcart.rest.shoppingcartservice.Model.User;
 import com.shoppingcart.rest.shoppingcartservice.Model.WishList;
@@ -15,9 +16,15 @@ public class UserService {
     UserRepository userRepository;
 
 //Retrieve user details by id
-    public User getUserById(int id)
+    public User getUserById(int id) throws ResourceNotFoundException
     {
-        return userRepository.findById(id);
+        User user = userRepository.findById(id);
+        if(user!=null)
+        {
+            return user;
+        }
+
+        throw new ResourceNotFoundException("user not found with id: "+ id);
     }
 
     public String SetUser(User user)
@@ -42,7 +49,7 @@ public class UserService {
         return "invalid body";
     }
 
-    public String UpdateUser(User user)
+    public String UpdateUser(User user) throws ResourceNotFoundException
     {
         if(getUserById(user.getUserId())!=null)
         {
