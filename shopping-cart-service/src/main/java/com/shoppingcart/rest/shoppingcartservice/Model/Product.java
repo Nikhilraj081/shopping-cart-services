@@ -23,6 +23,7 @@ public class Product {
     private int productId;
     private String productName;
     private String productCategory;
+    private String productSubCategory;
     private double price;
     private int stock;
     private double discount;
@@ -40,13 +41,13 @@ public class Product {
     @JsonManagedReference(value = "order-product")
     private List<Order> order;
 
-    
-    public Product(int productId, String productName, String productCategory, double price, int stock, double discount,
-            double specialPrice, Seller seller, List<CartItem> cartItem, List<WishListItem> wishListItem,
-            List<Order> order) {
+    public Product(int productId, String productName, String productCategory, String productSubCategory, double price,
+            int stock, double discount, double specialPrice, Seller seller, List<CartItem> cartItem,
+            List<WishListItem> wishListItem, List<Order> order) {
         this.productId = productId;
         this.productName = productName;
         this.productCategory = productCategory;
+        this.productSubCategory = productSubCategory;
         this.price = price;
         this.stock = stock;
         this.discount = discount;
@@ -167,6 +168,16 @@ public class Product {
 
     public void setSpecialPrice(double specialPrice) {
         this.specialPrice = specialPrice;
+    }
+
+
+    public String getProductSubCategory() {
+        return productSubCategory;
+    }
+
+
+    public void setProductSubCategory(String productSubCategory) {
+        this.productSubCategory = productSubCategory;
     }
 
     

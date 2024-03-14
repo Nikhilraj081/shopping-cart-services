@@ -24,6 +24,16 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
+    public List<Product> getProductByCategory(String category)
+    {
+        return productRepository.findByProductCategory(category);
+    }
+
+    public List<Product> getProductBySubCategory(String subCategory)
+    {
+        return productRepository.findByProductSubCategory(subCategory);
+    }
+
     public Product setProduct(Product product)
     {
         product.setSpecialPrice(product.getPrice() - product.getDiscount());

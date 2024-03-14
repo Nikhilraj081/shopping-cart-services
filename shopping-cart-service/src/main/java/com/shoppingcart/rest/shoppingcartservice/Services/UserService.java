@@ -42,5 +42,15 @@ public class UserService {
         return "invalid body";
     }
 
+    public String UpdateUser(User user)
+    {
+        if(getUserById(user.getUserId())!=null)
+        {
+            userRepository.save(user);
+            return "user updated";
+        } 
+        return "invalid user id";
+    }
+
 
 }
