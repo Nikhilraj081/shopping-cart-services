@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.shoppingcart.rest.shoppingcartservice.Dao.CartItemRepository;
 import com.shoppingcart.rest.shoppingcartservice.Dao.CartRepository;
 import com.shoppingcart.rest.shoppingcartservice.Dao.ProductRepository;
+import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundException;
 import com.shoppingcart.rest.shoppingcartservice.Model.Cart;
 import com.shoppingcart.rest.shoppingcartservice.Model.CartItem;
 import com.shoppingcart.rest.shoppingcartservice.Model.Product;
@@ -32,7 +33,7 @@ public class CartService {
     ProductService productService;
 
     //add product in cart
-    public String addProductToCart(int userId, int productId)
+    public String addProductToCart(int userId, int productId) throws ResourceNotFoundException
     {
 
         Cart cart = getCartByUserId(userId);
@@ -64,7 +65,7 @@ public class CartService {
 
     //update quantity in cart
 
-    public String updateProductQuantityInCart(int userId, int productId, int quantity)
+    public String updateProductQuantityInCart(int userId, int productId, int quantity) throws ResourceNotFoundException
     {
         Cart cart = getCartByUserId(userId);
         CartItem cartItem = getCartItemByCartIdAndProductId(cart.getCartId(), productId);
@@ -94,7 +95,7 @@ public class CartService {
 
     //delete product from cart
 
-    public String deleteProductFromCart(int userId, int productId)
+    public String deleteProductFromCart(int userId, int productId) throws ResourceNotFoundException
     {
         Cart cart = getCartByUserId(userId);
         CartItem cartItem = getCartItemByCartIdAndProductId(cart.getCartId(), productId);

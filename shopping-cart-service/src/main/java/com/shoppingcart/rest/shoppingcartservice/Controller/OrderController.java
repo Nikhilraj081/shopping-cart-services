@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundException;
 import com.shoppingcart.rest.shoppingcartservice.Model.Order;
 import com.shoppingcart.rest.shoppingcartservice.Services.OrderService;
 
@@ -21,26 +22,17 @@ public class OrderController {
     OrderService orderService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getOrder(@PathVariable("id") int id)
+    public ResponseEntity<?> getOrder(@PathVariable("id") int id) throws ResourceNotFoundException
     {
-       Order order = orderService.getOrderById(id);
-       if(order!=null)
-       {
-            return ResponseEntity.status(HttpStatus.OK).body(order);
-       }
-
-       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found");
+        Order order = orderService.getOrderById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(order);
     }
 
     @PostMapping("/order")
     public ResponseEntity<?> setOrder(@RequestBody Order order)
     {
         Order orderDetails = orderService.setOrder(order);
-        if(orderDetails!=null)
-        {
-            return ResponseEntity.status(HttpStatus.CREATED).body("Order created");
-        }
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Body is not valid");
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderDetails);
     }
 
 }

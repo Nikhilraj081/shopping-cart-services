@@ -10,5 +10,5 @@ import com.shoppingcart.rest.shoppingcartservice.Model.WishList;
 @Repository
 public interface WishListRepository extends JpaRepository<WishList, Integer> {
 
-    public List<WishList> findByUserUserId(int id);
+    public WishList findByUserUserId(int id);
 }

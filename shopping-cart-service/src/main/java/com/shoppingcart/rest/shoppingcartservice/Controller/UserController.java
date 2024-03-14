@@ -32,15 +32,15 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity <?> SetUser(@RequestBody User user)
     {
-        String string = userService.SetUser(user);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(string);
+        User newUser = userService.SetUser(user);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(newUser);
     }
 
     @PutMapping("user/update")
     public ResponseEntity<?> updateUser(@RequestBody User user) throws ResourceNotFoundException
     {
-        String string = userService.UpdateUser(user);
-        return ResponseEntity.status(HttpStatus.OK).body(string);
+        User newUser = userService.UpdateUser(user);
+        return ResponseEntity.status(HttpStatus.OK).body(newUser);
     }
 
 }

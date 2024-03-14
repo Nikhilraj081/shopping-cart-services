@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundException;
 import com.shoppingcart.rest.shoppingcartservice.Model.Seller;
 import com.shoppingcart.rest.shoppingcartservice.Services.SellerService;
 
@@ -21,24 +22,17 @@ public class SellerController {
     SellerService sellerService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getSeller(@PathVariable("id") int id)
+    public ResponseEntity<?> getSeller(@PathVariable("id") int id) throws ResourceNotFoundException
     {
-       Seller seller = sellerService.getSellerById(id);
-       if(seller!=null)
-       {
-            return ResponseEntity.status(HttpStatus.OK).body(seller);
-       }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Seller not found");
+        Seller seller = sellerService.getSellerById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(seller);
     }
 
     @PostMapping("/seller")
     public ResponseEntity<?> setSeller(@RequestBody Seller seller)
     {
-        Seller sellerDetails = sellerService.setSeller(seller);
-        if(sellerDetails!=null)
-        {
-            return ResponseEntity.status(HttpStatus.CREATED).body("seller created");
-        }
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Invalid body");
+        Seller newSeller = sellerService.setSeller(seller);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newSeller);
+
     }
 }

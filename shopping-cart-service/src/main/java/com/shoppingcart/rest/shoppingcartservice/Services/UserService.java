@@ -27,8 +27,9 @@ public class UserService {
         throw new ResourceNotFoundException("user not found with id: "+ id);
     }
 
-    public String SetUser(User user)
+    public User SetUser(User user)
     {
+        User newuser = null;
         if(user!=null)
         {
             //set cart
@@ -41,22 +42,19 @@ public class UserService {
             wishlist.setUser(user);
             user.setWishList(wishlist);
 
-            userRepository.save(user);
+            newuser = userRepository.save(user);
             
-            return "user added";
         }
-
-        return "invalid body";
+        return newuser;
     }
 
-    public String UpdateUser(User user) throws ResourceNotFoundException
+    public User UpdateUser(User user) throws ResourceNotFoundException
     {
         if(getUserById(user.getUserId())!=null)
         {
-            userRepository.save(user);
-            return "user updated";
+            return userRepository.save(user);
         } 
-        return "invalid user id";
+       throw new ResourceNotFoundException("user not found with id: "+ user.getUserId());
     }
 
 

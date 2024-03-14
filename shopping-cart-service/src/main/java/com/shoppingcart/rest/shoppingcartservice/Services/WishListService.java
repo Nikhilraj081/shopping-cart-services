@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shoppingcart.rest.shoppingcartservice.Dao.WishListRepository;
+import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundException;
 import com.shoppingcart.rest.shoppingcartservice.Model.WishList;
 
 @Service
@@ -14,18 +15,26 @@ public class WishListService {
     @Autowired
     WishListRepository wishListRepository;
 
-    public List<WishList> getWishList(int id)
+    public WishList getWishList(int id) throws ResourceNotFoundException
     {
-        return wishListRepository.findByUserUserId(id);
+        WishList wishList = wishListRepository.findByUserUserId(id);
+
+        if(wishList != null)
+        {
+            return wishList;
+        }
+
+        throw new ResourceNotFoundException("wishlist not found with id: "+id);
     }
 
     public WishList setWishList(WishList wishlist)
     {
+        WishList neWishList = null;
         if(wishlist!=null)
         {
-            return wishListRepository.save(wishlist);
+            neWishList = wishListRepository.save(wishlist);
         } 
-        return null;
+        return neWishList;
     }
 
 }
