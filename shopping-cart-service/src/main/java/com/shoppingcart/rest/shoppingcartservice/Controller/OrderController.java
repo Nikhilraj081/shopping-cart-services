@@ -1,5 +1,7 @@
 package com.shoppingcart.rest.shoppingcartservice.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shoppingcart.rest.shoppingcartservice.Exceptions.ApiException;
 import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundException;
 import com.shoppingcart.rest.shoppingcartservice.Model.Order;
 import com.shoppingcart.rest.shoppingcartservice.Services.OrderService;
@@ -28,10 +31,10 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(order);
     }
 
-    @PostMapping("/order")
-    public ResponseEntity<?> setOrder(@RequestBody Order order)
+    @PostMapping("/user/{userId}/cart/{cartId}")
+    public ResponseEntity<?> createOrder(@PathVariable("userId") int userId, @PathVariable("cartId") int cartId) throws ResourceNotFoundException, ApiException
     {
-        Order orderDetails = orderService.setOrder(order);
+        List<Order> orderDetails = orderService.createOrder(userId, cartId);
         return ResponseEntity.status(HttpStatus.CREATED).body(orderDetails);
     }
 

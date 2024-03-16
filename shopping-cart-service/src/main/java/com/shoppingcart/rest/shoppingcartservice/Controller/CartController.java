@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.shoppingcart.rest.shoppingcartservice.Exceptions.ApiException;
+import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundException;
 import com.shoppingcart.rest.shoppingcartservice.Model.Cart;
+import com.shoppingcart.rest.shoppingcartservice.Model.CartItem;
 import com.shoppingcart.rest.shoppingcartservice.Services.CartService;
 
 @RestController
@@ -25,49 +29,37 @@ public class CartController {
     CartService cartService;
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getCartByUserId(@PathVariable("userId") int userId)
+    public ResponseEntity<?> getCartByUserId(@PathVariable("userId") int userId) throws ResourceNotFoundException
     {
         Cart cart = cartService.getCartByUserId(userId);
-        if(cart!=null)
-        {
-            return ResponseEntity.status(HttpStatus.OK).body(cart);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("cart not found");
-        
+        return ResponseEntity.status(HttpStatus.OK).body(cart); 
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCartById(@PathVariable("id") int id)
+    public ResponseEntity<?> getCartById(@PathVariable("id") int id) throws ResourceNotFoundException
     {
         Cart cart = cartService.getCartById(id);
-        if(cart!=null)
-        {
-            return ResponseEntity.status(HttpStatus.OK).body(cart);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("cart not found");
-        
+        return ResponseEntity.status(HttpStatus.OK).body(cart);  
     }
 
     @PostMapping("/user/{userId}/product/{productId}")
-    public ResponseEntity<?> addProductToCart(@PathVariable("userId") int userId, @PathVariable("productId") int productId)
+    public ResponseEntity<?> addProductToCart(@PathVariable("userId") int userId, @PathVariable("productId") int productId) throws ResourceNotFoundException, ApiException
     {
-        String string = cartService.addProductToCart(userId, productId);
-    
-        return ResponseEntity.status(HttpStatus.CREATED).body(string);
-        
+        CartItem cartItem = cartService.addProductToCart(userId, productId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cartItem); 
     }
 
     @PutMapping("/user/{userId}/product/{productId}/quantity/{quantity}/update")
-    public ResponseEntity<?> updateProductQuantityInCart(@PathVariable("userId") int userId, @PathVariable("productId") int productId, @PathVariable("quantity") int quantity)
+    public ResponseEntity<?> updateProductQuantityInCart(@PathVariable("userId") int userId, @PathVariable("productId") int productId, @PathVariable("quantity") int quantity) throws ResourceNotFoundException, ApiException
     {
-        String string = cartService.updateProductQuantityInCart(userId, productId, quantity);
-        return ResponseEntity.status(HttpStatus.OK).body(string);
+       CartItem cartItem = cartService.updateProductQuantityInCart(userId, productId, quantity);
+        return ResponseEntity.status(HttpStatus.OK).body(cartItem);
     }
 
     @DeleteMapping("/user/{userId}/product/{productId}/delete")
-    public ResponseEntity<?> deteleProductFromCart(@PathVariable("userId") int userId, @PathVariable("productId") int productId)
+    public ResponseEntity<?> deteleProductFromCart(@PathVariable("userId") int userId, @PathVariable("productId") int productId) throws ResourceNotFoundException, ApiException
     {
-        String string = cartService.deleteProductFromCart(userId, productId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(string);
+        Cart cart = cartService.deleteProductFromCart(userId, productId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(cart);
     }
 }

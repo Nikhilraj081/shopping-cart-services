@@ -1,5 +1,8 @@
 package com.shoppingcart.rest.shoppingcartservice.Model;
 
+import java.util.Calendar;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -16,34 +19,35 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int orderId;
+    private long orderId;
     @ManyToOne
     @JsonBackReference(value = "order-user")
     private User user;
-    private String date;
+    private Calendar date;
     @ManyToOne
     @JsonBackReference(value = "order-product")
     private Product product;
     private int quantity;
+    private double price;
 
    
-
-    public Order(int orderId, User user, String date, Product product, int quantity) {
+    public Order(long orderId, User user, Calendar date, Product product, int quantity, double price) {
         this.orderId = orderId;
         this.user = user;
         this.date = date;
         this.product = product;
         this.quantity = quantity;
+        this.price = price;
     }
 
     public Order() {
     }
 
-    public int getOrderId() {
+    public long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(long orderId) {
         this.orderId = orderId;
     }
 
@@ -55,11 +59,11 @@ public class Order {
         this.user = user;
     }
 
-    public String getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 
@@ -81,6 +85,14 @@ public class Order {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     

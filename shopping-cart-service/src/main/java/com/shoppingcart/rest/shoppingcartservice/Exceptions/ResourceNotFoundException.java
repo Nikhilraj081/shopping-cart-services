@@ -4,7 +4,6 @@ import org.hibernate.annotations.NotFound;
 
 public class ResourceNotFoundException extends Exception {
 
-   
     public ResourceNotFoundException(String message)
     {
         super(message);
