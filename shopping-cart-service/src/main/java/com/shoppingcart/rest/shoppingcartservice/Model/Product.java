@@ -28,6 +28,9 @@ public class Product {
     private int stock;
     private double discount;
     private double specialPrice;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonBackReference(value = "product-image")
+    private List<ProductImage> productImage;
     @ManyToOne
     @JsonBackReference(value = "product-seller")
     private Seller seller;

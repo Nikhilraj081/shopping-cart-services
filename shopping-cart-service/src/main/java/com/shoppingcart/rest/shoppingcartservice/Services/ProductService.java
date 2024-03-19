@@ -1,19 +1,36 @@
 package com.shoppingcart.rest.shoppingcartservice.Services;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.shoppingcart.rest.shoppingcartservice.Dao.ProductImageRepository;
 import com.shoppingcart.rest.shoppingcartservice.Dao.ProductRepository;
 import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundException;
 import com.shoppingcart.rest.shoppingcartservice.Model.Product;
+import com.shoppingcart.rest.shoppingcartservice.Model.ProductImage;
 
 @Service
 public class ProductService {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    ProductImageRepository productImageRepository;
+
+    @Autowired
+    SellerService sellerService;
+
+    @Value("${image.path}")
+    private String path;
 
     public List<Product> getAllProduct() throws ResourceNotFoundException
     {
@@ -59,14 +76,40 @@ public class ProductService {
         throw new ResourceNotFoundException("product not found with subcategory: "+subCategory);
     }
 
-    public Product setProduct(Product product)
+    public Product setProduct(int sellerId, Product product, MultipartFile[] image) throws IOException, ResourceNotFoundException
     {
-        Product newProduct = null;
         product.setSpecialPrice(product.getPrice() - product.getDiscount());
-        if(product!=null)
+        product.setSeller(sellerService.getSellerById(sellerId));
+        Product newProduct = null;
+        
+        //to save image in folder and database
+        for (MultipartFile multipartFile : image)
         {
+
+            //get file name
+            String fileName = multipartFile.getOriginalFilename();      
+            
+            //get path
+            String filePath = path +File.separator+fileName;
+
+            //create folder
+            File file = new File(path);
+
+            if(!file.exists())
+            {
+                file.mkdir();
+            }
+
+            Files.copy(multipartFile.getInputStream(), Paths.get(filePath));
+            ProductImage productImage = new ProductImage();
+            productImage.setImageName(fileName);
+            productImage.setProduct(product);
+
             newProduct = productRepository.save(product);
+            productImageRepository.save(productImage);
+
         }
+
         return newProduct;
     }
 }

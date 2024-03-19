@@ -1,5 +1,6 @@
 package com.shoppingcart.rest.shoppingcartservice.Controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,6 @@ public class ProductController {
     @Autowired
     ProductService productService;
     
-    @Value("${image.path}")
-    private String path;
-
     @Autowired
     private ObjectMapper mapper;
 
@@ -64,8 +62,8 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(product); 
     }
 
-    @PostMapping("/seller/{sellerId}")
-    public ResponseEntity<?> seProduct(@RequestParam("image") MultipartFile[] image, @RequestParam("productData") String productData)
+    @PostMapping("/seller/{sellerId}/add")
+    public ResponseEntity<?> seProduct(@PathVariable("sellerId") int sellerId, @RequestParam("image") MultipartFile[] image, @RequestParam("productData") String productData) throws IOException, ResourceNotFoundException
     {
         //convert string to json
         Product product = null;
@@ -79,18 +77,8 @@ public class ProductController {
             e.printStackTrace();
         }
 
-        // Product newProduct = productService.setProduct(product);
-        // return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
-
-        for (MultipartFile multipartFile : image) {
-            System.out.println(multipartFile.getOriginalFilename());
-            
-        }
-
-        System.out.println(product.getProductName());
-
-
-        return ResponseEntity.status(HttpStatus.OK).body("done");
+        Product newProduct = productService.setProduct(sellerId, product, image);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
     }
 
 }
