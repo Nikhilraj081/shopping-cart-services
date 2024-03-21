@@ -81,4 +81,13 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
     }
 
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<?> searchProduct(@PathVariable("keyword") String keyword) throws ResourceNotFoundException {
+
+        List<Product> product = productService.searchByName(keyword);
+
+        return ResponseEntity.status(HttpStatus.OK).body(product);
+    }
+    
+
 }

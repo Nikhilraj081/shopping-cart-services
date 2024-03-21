@@ -112,4 +112,15 @@ public class ProductService {
 
         return newProduct;
     }
+
+    public List<Product> searchByName(String keyword) throws ResourceNotFoundException
+    {
+       List<Product> product = productRepository.findByProductNameContaining(keyword);
+       if(product == null)
+       {
+            throw new ResourceNotFoundException(keyword);
+       }
+
+       return product;
+    }
 }

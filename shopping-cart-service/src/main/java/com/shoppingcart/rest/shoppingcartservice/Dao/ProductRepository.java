@@ -16,5 +16,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     public List<Product> findByProductSubCategory(String subCategory);
 
+    public List<Product> findByProductNameContaining(String keyword);
+
 
 }
