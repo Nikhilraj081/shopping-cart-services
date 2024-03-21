@@ -1,19 +1,32 @@
 package com.shoppingcart.rest.shoppingcartservice.Model;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,6 +35,9 @@ public class User {
     private String userMobileNo;
     private String userEmailId;
     private String userPassword;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_ROLE", joinColumns = {@JoinColumn(name = "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
+    private Set<Role> roles = new HashSet<>();
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "cart-user")
     private Cart cart;
@@ -35,13 +51,14 @@ public class User {
     @JsonManagedReference(value = "wishlist-user")
     private WishList wishList;
 
-    public User(int userId, String userName, String userMobileNo, String userEmailId, String userPassword, Cart cart,
-           List<Order> order, List<Address> address, WishList wishList) {
+    public User(int userId, String userName, String userMobileNo, String userEmailId, String userPassword,
+            Set<Role> roles, Cart cart, List<Order> order, List<Address> address, WishList wishList) {
         this.userId = userId;
         this.userName = userName;
         this.userMobileNo = userMobileNo;
         this.userEmailId = userEmailId;
         this.userPassword = userPassword;
+        this.roles = roles;
         this.cart = cart;
         this.order = order;
         this.address = address;
@@ -49,6 +66,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public int getUserId() {
@@ -83,6 +108,7 @@ public class User {
         this.userEmailId = userEmailId;
     }
 
+    @JsonIgnore
     public String getUserPassword() {
         return userPassword;
     }
@@ -121,6 +147,56 @@ public class User {
 
     public void setWishList(WishList wishList) {
         this.wishList = wishList;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        List<SimpleGrantedAuthority> authorities =  this.roles.stream().map(  (role) -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList()); 
+      
+        return authorities;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getPassword() {
+        
+        return this.userPassword;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getUsername() {
+        
+        return this.userEmailId;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        
+       return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isEnabled() {
+       
+       return true;
     }
 
 }

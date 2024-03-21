@@ -32,7 +32,7 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity <?> SetUser(@RequestBody User user)
     {
-        User newUser = userService.SetUser(user);
+        User newUser = userService.setUser(user);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(newUser);
     }
 
