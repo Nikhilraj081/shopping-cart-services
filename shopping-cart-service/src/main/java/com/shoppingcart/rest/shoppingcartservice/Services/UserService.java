@@ -42,6 +42,7 @@ public class UserService {
 
     public User setUser(User user)
     {
+
         Role role = new Role();
         role = roleRepository.findByRole("user");
 

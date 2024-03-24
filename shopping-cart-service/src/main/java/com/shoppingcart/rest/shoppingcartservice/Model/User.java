@@ -50,6 +50,9 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "wishlist-user")
     private WishList wishList;
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference(value = "productreview-user")
+    private List<ProductReview> review;
 
     public User(int userId, String userName, String userMobileNo, String userEmailId, String userPassword,
             Set<Role> roles, Cart cart, List<Order> order, List<Address> address, WishList wishList) {
@@ -108,7 +111,6 @@ public class User implements UserDetails {
         this.userEmailId = userEmailId;
     }
 
-    @JsonIgnore
     public String getUserPassword() {
         return userPassword;
     }

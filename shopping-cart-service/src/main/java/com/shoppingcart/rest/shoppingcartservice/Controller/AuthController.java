@@ -74,10 +74,6 @@ public class AuthController {
 
     private void doAuthenticate(String email, String password) {
 
-        // System.out.println(email);
-        // System.out.println(password);
-        // System.out.println(passwordEncoder.encode(password));
-
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
         try {
             manager.authenticate(authentication);

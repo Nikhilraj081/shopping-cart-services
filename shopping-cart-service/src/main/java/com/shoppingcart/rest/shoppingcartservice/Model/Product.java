@@ -43,10 +43,20 @@ public class Product {
     @OneToMany(mappedBy = "product")
     @JsonManagedReference(value = "order-product")
     private List<Order> order;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "productcolor-product")
+    private List<ProductColor> color;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "productsize-product")
+    private List<ProductSize> size;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "productreview-product")
+    private List<ProductReview> review;
 
     public Product(int productId, String productName, String productCategory, String productSubCategory, double price,
-            int stock, double discount, double specialPrice, Seller seller, List<CartItem> cartItem,
-            List<WishListItem> wishListItem, List<Order> order) {
+            int stock, double discount, double specialPrice, List<ProductImage> productImage, Seller seller,
+            List<CartItem> cartItem, List<WishListItem> wishListItem, List<Order> order, List<ProductColor> color,
+            List<ProductSize> size, List<ProductReview> review) {
         this.productId = productId;
         this.productName = productName;
         this.productCategory = productCategory;
@@ -55,14 +65,58 @@ public class Product {
         this.stock = stock;
         this.discount = discount;
         this.specialPrice = specialPrice;
+        this.productImage = productImage;
         this.seller = seller;
         this.cartItem = cartItem;
         this.wishListItem = wishListItem;
         this.order = order;
+        this.color = color;
+        this.size = size;
+        this.review = review;
     }
 
 
     public Product() {
+    }
+
+
+    public List<ProductImage> getProductImage() {
+        return productImage;
+    }
+
+
+    public void setProductImage(List<ProductImage> productImage) {
+        this.productImage = productImage;
+    }
+
+
+    public List<ProductColor> getColor() {
+        return color;
+    }
+
+
+    public void setColor(List<ProductColor> color) {
+        this.color = color;
+    }
+
+
+    public List<ProductSize> getSize() {
+        return size;
+    }
+
+
+    public void setSize(List<ProductSize> size) {
+        this.size = size;
+    }
+
+
+    public List<ProductReview> getReview() {
+        return review;
+    }
+
+
+    public void setReview(List<ProductReview> review) {
+        this.review = review;
     }
 
 

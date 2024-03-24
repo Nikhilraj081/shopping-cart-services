@@ -80,8 +80,8 @@ public class ProductService {
     {
         product.setSpecialPrice(product.getPrice() - product.getDiscount());
         product.setSeller(sellerService.getSellerById(sellerId));
-        Product newProduct = null;
-        
+        Product newProduct = productRepository.save(product);
+
         //to save image in folder and database
         for (MultipartFile multipartFile : image)
         {
@@ -104,8 +104,7 @@ public class ProductService {
             ProductImage productImage = new ProductImage();
             productImage.setImageName(fileName);
             productImage.setProduct(product);
-
-            newProduct = productRepository.save(product);
+    
             productImageRepository.save(productImage);
 
         }
