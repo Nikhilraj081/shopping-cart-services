@@ -19,19 +19,21 @@ public class Address {
     private int pinCode;
     private String state;
     private String city;
+    private String area;
     @ManyToOne
     @JsonBackReference(value = "address-user")
     private User user;
     private String addressType;
 
-    public Address(int addressId, String name, String phoneNo, int pinCode, String state, String city, User user,
-            String addressType) {
+    public Address(int addressId, String name, String phoneNo, int pinCode, String state, String city, String area,
+            User user, String addressType) {
         this.addressId = addressId;
         this.name = name;
         this.phoneNo = phoneNo;
         this.pinCode = pinCode;
         this.state = state;
         this.city = city;
+        this.area = area;
         this.user = user;
         this.addressType = addressType;
     }
@@ -101,6 +103,14 @@ public class Address {
 
     public void setAddressType(String addressType) {
         this.addressType = addressType;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     

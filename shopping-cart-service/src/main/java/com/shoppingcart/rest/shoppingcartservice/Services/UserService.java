@@ -1,6 +1,7 @@
 package com.shoppingcart.rest.shoppingcartservice.Services;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.shoppingcart.rest.shoppingcartservice.Dao.RoleRepository;
 import com.shoppingcart.rest.shoppingcartservice.Dao.UserRepository;
+import com.shoppingcart.rest.shoppingcartservice.Exceptions.ApiException;
 import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundException;
+import com.shoppingcart.rest.shoppingcartservice.Model.Address;
 import com.shoppingcart.rest.shoppingcartservice.Model.Cart;
 import com.shoppingcart.rest.shoppingcartservice.Model.Role;
 import com.shoppingcart.rest.shoppingcartservice.Model.User;
@@ -40,16 +43,45 @@ public class UserService {
         throw new ResourceNotFoundException("user not found with id: "+ id);
     }
 
-    public User setUser(User user)
+//Retrive User address
+    public List<Address> getAddress(int id) throws ResourceNotFoundException
     {
+        User user = getUserById(id);
+        List<Address> address = user.getAddress();
+        return address;
+    }
 
-        Role role = new Role();
-        role = roleRepository.findByRole("user");
+    public List<Address> setAddress(List<Address> address, int id) throws ResourceNotFoundException
+    {
+        User user = getUserById(id);
+        address.forEach(items -> items.setUser(user));
+        user.setAddress(address);
+        userRepository.save(user);
 
-        Set userRole = new HashSet<>();
-        userRole.add(role);
-        user.setRoles(userRole);
-        user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
+        return user.getAddress();
+    }
+
+    public User setUser(User user, String role) throws ApiException
+    {
+        if(role == "user" || role == "seller" )
+        {
+            Role newRole = new Role();
+            newRole = roleRepository.findByRole(role);
+
+            Set userRole = new HashSet<>();
+            userRole.add(newRole);
+            user.setRoles(userRole);
+            user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
+        }
+        else{
+            throw new ApiException("User role is invalid");
+        }
+
+        if(role == "seller")
+        {
+            User seller = userRepository.save(user);
+            return seller;
+        }
 
         User newuser = null;
         if(user!=null)

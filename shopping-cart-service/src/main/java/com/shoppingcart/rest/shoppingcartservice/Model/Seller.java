@@ -19,18 +19,49 @@ public class Seller {
     private int sellerId;
     private String sellerName;
     private String sellerAddress;
+    private String sellerEmailId;
+    private String sellerMobileNo;
+    private String sellerPassword;
     @OneToMany(mappedBy = "seller")
     @JsonManagedReference(value = "product-seller")
     private List<Product> product;
     
-    public Seller(int sellerId, String sellerName, String sellerAddress, List<Product> product) {
+    public Seller(int sellerId, String sellerName, String sellerAddress, String sellerEmailId, String sellerMobileNo,
+            String sellerPassword, List<Product> product) {
         this.sellerId = sellerId;
         this.sellerName = sellerName;
         this.sellerAddress = sellerAddress;
+        this.sellerEmailId = sellerEmailId;
+        this.sellerMobileNo = sellerMobileNo;
+        this.sellerPassword = sellerPassword;
         this.product = product;
     }
 
     public Seller() {
+    }
+
+    public String getSellerEmailId() {
+        return sellerEmailId;
+    }
+
+    public void setSellerEmailId(String sellerEmailId) {
+        this.sellerEmailId = sellerEmailId;
+    }
+
+    public String getSellerMobileNo() {
+        return sellerMobileNo;
+    }
+
+    public void setSellerMobileNo(String sellerMobileNo) {
+        this.sellerMobileNo = sellerMobileNo;
+    }
+
+    public String getSellerPassword() {
+        return sellerPassword;
+    }
+
+    public void setSellerPassword(String sellerPassword) {
+        this.sellerPassword = sellerPassword;
     }
 
     public int getSellerId() {

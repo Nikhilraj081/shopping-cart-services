@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import com.shoppingcart.rest.shoppingcartservice.Exceptions.ApiException;
 import com.shoppingcart.rest.shoppingcartservice.Model.JwtRequest;
 import com.shoppingcart.rest.shoppingcartservice.Model.JwtResponse;
 import com.shoppingcart.rest.shoppingcartservice.Model.User;
@@ -43,6 +44,8 @@ public class AuthController {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
+    private static final String role = "user";
+
     private Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @PostMapping("/login")
@@ -62,9 +65,9 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> userRegister(@RequestBody User user)
+    public ResponseEntity<?> userRegister(@RequestBody User user) throws ApiException
     {
-        User userDetails = userService.setUser(user);
+        User userDetails = userService.setUser(user,role);
         if(userDetails==null)
         {
             return ResponseEntity.status(HttpStatus.ACCEPTED).build();

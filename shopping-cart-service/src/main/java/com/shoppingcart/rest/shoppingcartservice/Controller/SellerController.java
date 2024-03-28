@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shoppingcart.rest.shoppingcartservice.Exceptions.ApiException;
 import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundException;
 import com.shoppingcart.rest.shoppingcartservice.Model.Seller;
 import com.shoppingcart.rest.shoppingcartservice.Services.SellerService;
@@ -29,7 +30,7 @@ public class SellerController {
     }
 
     @PostMapping("/seller")
-    public ResponseEntity<?> setSeller(@RequestBody Seller seller)
+    public ResponseEntity<?> setSeller(@RequestBody Seller seller) throws ApiException
     {
         Seller newSeller = sellerService.setSeller(seller);
         return ResponseEntity.status(HttpStatus.CREATED).body(newSeller);
