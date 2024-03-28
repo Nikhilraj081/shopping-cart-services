@@ -53,7 +53,6 @@ public class User implements UserDetails {
 
     
     @NotEmpty(message = "Password should not be null")
-    @Size(min = 8, max = 16, message = "Password length should be between 8 to 16 character")
     private String userPassword;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
