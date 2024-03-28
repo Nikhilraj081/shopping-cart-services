@@ -15,9 +15,11 @@ public class WishListItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int wishListItemId;
+
     @ManyToOne
     @JsonBackReference(value = "wishlistitem-wishlist")
     private WishList wishList;
+    
     @ManyToOne
     private Product product;
     

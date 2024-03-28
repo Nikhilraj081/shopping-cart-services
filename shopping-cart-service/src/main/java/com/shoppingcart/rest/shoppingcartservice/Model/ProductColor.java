@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class ProductColor {
@@ -14,7 +15,10 @@ public class ProductColor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int colorId;
+
+    @NotEmpty(message = "Color name should not be empty")
     private String colorName;
+
     @ManyToOne
     @JsonBackReference(value = "productcolor-product")
     private Product product;

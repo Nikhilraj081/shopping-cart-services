@@ -21,6 +21,8 @@ import com.shoppingcart.rest.shoppingcartservice.Model.Cart;
 import com.shoppingcart.rest.shoppingcartservice.Model.CartItem;
 import com.shoppingcart.rest.shoppingcartservice.Services.CartService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/carts")
 public class CartController {
@@ -43,14 +45,14 @@ public class CartController {
     }
 
     @PostMapping("/user/{userId}/product/{productId}")
-    public ResponseEntity<?> addProductToCart(@PathVariable("userId") int userId, @PathVariable("productId") int productId) throws ResourceNotFoundException, ApiException
+    public ResponseEntity<?> addProductToCart(@Valid @PathVariable("userId") int userId, @PathVariable("productId") int productId) throws ResourceNotFoundException, ApiException
     {
         CartItem cartItem = cartService.addProductToCart(userId, productId);
         return ResponseEntity.status(HttpStatus.CREATED).body(cartItem); 
     }
 
     @PutMapping("/user/{userId}/product/{productId}/quantity/{quantity}/update")
-    public ResponseEntity<?> updateProductQuantityInCart(@PathVariable("userId") int userId, @PathVariable("productId") int productId, @PathVariable("quantity") int quantity) throws ResourceNotFoundException, ApiException
+    public ResponseEntity<?> updateProductQuantityInCart(@Valid @PathVariable("userId") int userId, @PathVariable("productId") int productId, @PathVariable("quantity") int quantity) throws ResourceNotFoundException, ApiException
     {
        CartItem cartItem = cartService.updateProductQuantityInCart(userId, productId, quantity);
         return ResponseEntity.status(HttpStatus.OK).body(cartItem);

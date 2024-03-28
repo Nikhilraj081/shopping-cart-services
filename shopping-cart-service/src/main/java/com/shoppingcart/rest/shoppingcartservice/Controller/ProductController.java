@@ -23,6 +23,8 @@ import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundExce
 import com.shoppingcart.rest.shoppingcartservice.Model.Product;
 import com.shoppingcart.rest.shoppingcartservice.Services.ProductService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -63,7 +65,7 @@ public class ProductController {
     }
 
     @PostMapping("/seller/{sellerId}/add")
-    public ResponseEntity<?> seProduct(@PathVariable("sellerId") int sellerId, @RequestParam("image") MultipartFile[] image, @RequestParam("productData") String productData) throws IOException, ResourceNotFoundException
+    public ResponseEntity<?> seProduct(@Valid @PathVariable("sellerId") int sellerId, @RequestParam("image") MultipartFile[] image, @RequestParam("productData") String productData) throws IOException, ResourceNotFoundException
     {
         //convert string to json
         Product product = null;

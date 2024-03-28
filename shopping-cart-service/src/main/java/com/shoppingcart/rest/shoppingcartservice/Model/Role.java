@@ -4,12 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Role {
 
     @Id
     private int roleId;
+
+    @NotEmpty(message = "role should not be empty")
     private String role;
     
     public Role(int roleId, String role) {

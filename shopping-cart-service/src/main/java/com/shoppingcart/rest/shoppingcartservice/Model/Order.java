@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Orders")
@@ -23,11 +24,18 @@ public class Order {
     @ManyToOne
     @JsonBackReference(value = "order-user")
     private User user;
+
+    @NotEmpty(message = "Date should not be empty")
     private Calendar date;
+
     @ManyToOne
     @JsonBackReference(value = "order-product")
     private Product product;
+
+    @NotEmpty(message = "Quantity should not be empty")
     private int quantity;
+
+    @NotEmpty(message = "Price should not be empty")
     private double price;
 
    

@@ -21,6 +21,8 @@ import com.shoppingcart.rest.shoppingcartservice.Model.User;
 import com.shoppingcart.rest.shoppingcartservice.Security.JwtHelper;
 import com.shoppingcart.rest.shoppingcartservice.Services.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -65,14 +67,11 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> userRegister(@RequestBody User user) throws ApiException
+    public ResponseEntity<?> userRegister(@Valid @RequestBody User user) throws ApiException
     {
         User userDetails = userService.setUser(user,role);
-        if(userDetails==null)
-        {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+      
+        return ResponseEntity.status(HttpStatus.CREATED).body(userDetails);
     }
 
     private void doAuthenticate(String email, String password) {

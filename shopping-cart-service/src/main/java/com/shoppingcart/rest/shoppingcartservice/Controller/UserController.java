@@ -18,6 +18,8 @@ import com.shoppingcart.rest.shoppingcartservice.Model.Address;
 import com.shoppingcart.rest.shoppingcartservice.Model.User;
 import com.shoppingcart.rest.shoppingcartservice.Services.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -41,7 +43,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/add/address")
-    public ResponseEntity<?> setUserAddress(@RequestBody List<Address> address , @PathVariable("id") int id) throws ResourceNotFoundException
+    public ResponseEntity<?> setUserAddress(@Valid @RequestBody List<Address> address , @PathVariable("id") int id) throws ResourceNotFoundException
     {
         List<Address> newAddress = userService.setAddress(address, id);
 
@@ -49,7 +51,7 @@ public class UserController {
     }
 
     @PutMapping("user/update")
-    public ResponseEntity<?> updateUser(@RequestBody User user) throws ResourceNotFoundException
+    public ResponseEntity<?> updateUser(@Valid @RequestBody User user) throws ResourceNotFoundException
     {
         User newUser = userService.UpdateUser(user);
         return ResponseEntity.status(HttpStatus.OK).body(newUser);

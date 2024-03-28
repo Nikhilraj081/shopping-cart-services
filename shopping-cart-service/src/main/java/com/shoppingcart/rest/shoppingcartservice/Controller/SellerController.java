@@ -15,6 +15,8 @@ import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundExce
 import com.shoppingcart.rest.shoppingcartservice.Model.Seller;
 import com.shoppingcart.rest.shoppingcartservice.Services.SellerService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/sellers")
 public class SellerController {
@@ -30,7 +32,7 @@ public class SellerController {
     }
 
     @PostMapping("/seller")
-    public ResponseEntity<?> setSeller(@RequestBody Seller seller) throws ApiException
+    public ResponseEntity<?> setSeller(@Valid @RequestBody Seller seller) throws ApiException
     {
         Seller newSeller = sellerService.setSeller(seller);
         return ResponseEntity.status(HttpStatus.CREATED).body(newSeller);

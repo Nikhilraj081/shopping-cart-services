@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Shipment {
@@ -11,7 +12,11 @@ public class Shipment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int shipmentId;
+
+    @NotEmpty(message = "expected delivery date should not be empty")
     private String expectedDeliveryDate;
+
+    @NotEmpty(message = "shipment partner should not be empty")
     private String shipmentPartner;
 
     public Shipment(int shipmentId, String expectedDeliveryDate, String shipmentPartner) {

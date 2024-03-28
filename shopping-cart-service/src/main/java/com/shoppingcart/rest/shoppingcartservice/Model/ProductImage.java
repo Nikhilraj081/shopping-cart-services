@@ -15,7 +15,9 @@ public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     private String imageName;
+    
     @ManyToOne
     @JsonBackReference(value = "product-image")
     private Product product;

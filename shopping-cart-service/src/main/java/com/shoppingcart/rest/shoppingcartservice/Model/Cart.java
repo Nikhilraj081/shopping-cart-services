@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Cart {
@@ -23,13 +24,17 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int cartId;
+
     @OneToOne
     @JsonBackReference(value = "cart-user")
     private User user;
+    
     @OneToMany(mappedBy = "cart")
     @JsonManagedReference(value = "cartitem-cart")
     private List<CartItem> cartItem;
+
     private double totalPrice;
+
     private double discount;
 
     public Cart(int cartId, User user, List<CartItem> cartItem, double totalPrice, double discount) {

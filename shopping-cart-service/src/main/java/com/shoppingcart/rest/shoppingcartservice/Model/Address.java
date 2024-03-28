@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Address {
@@ -14,15 +15,30 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int addressId;
+
+    @NotEmpty(message = "Name should not be empty")
     private String name;
+
+    @NotEmpty(message = "Phone no should not be empty")
     private String phoneNo;;
+
+    @NotEmpty(message = "Pincode should not be empty")
     private int pinCode;
+
+    @NotEmpty(message = "State should not be empty")
     private String state;
+
+    @NotEmpty(message = "City should not be empty")
     private String city;
+
+    @NotEmpty(message = "Area should not be empty")
     private String area;
+
     @ManyToOne
     @JsonBackReference(value = "address-user")
     private User user;
+
+    @NotEmpty(message = "Name should not be empty")
     private String addressType;
 
     public Address(int addressId, String name, String phoneNo, int pinCode, String state, String city, String area,
@@ -112,12 +128,5 @@ public class Address {
     public void setArea(String area) {
         this.area = area;
     }
-
-    
-    
-    
-
-    
-
     
 }

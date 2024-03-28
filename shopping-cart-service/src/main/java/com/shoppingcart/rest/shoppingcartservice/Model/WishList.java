@@ -19,9 +19,11 @@ public class WishList {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int wishListId;
+
     @OneToMany(mappedBy = "wishList")
     @JsonManagedReference(value = "wishlistitem-wishlist")
     private List<WishListItem> wishListItem;
+    
     @OneToOne
     @JsonBackReference(value = "wishlist-user")
     private User user;

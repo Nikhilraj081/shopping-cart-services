@@ -5,11 +5,15 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Seller {
@@ -17,11 +21,26 @@ public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int sellerId;
+
+    @NotEmpty(message = "Seller Name should not be empty")
     private String sellerName;
+
+    @NotEmpty(message = "Seller address should not be empty")
     private String sellerAddress;
+
+    @Column(unique = true)
+    @Email(message = "Email is not valid")
+    @NotEmpty(message = "Email should not be empty")
     private String sellerEmailId;
+
+    @Column(unique = true)
+    @NotEmpty(message = "seller Mobile no should not be empty")
     private String sellerMobileNo;
+
+    @NotEmpty(message = "Password should not be empty")
+    @Size(min = 8, max = 16, message = "Password length should be between 8 to 16 character")
     private String sellerPassword;
+
     @OneToMany(mappedBy = "seller")
     @JsonManagedReference(value = "product-seller")
     private List<Product> product;

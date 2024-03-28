@@ -77,6 +77,16 @@ public class UserService {
             throw new ApiException("User role is invalid");
         }
 
+        if(!userRepository.findByUserEmailId(user.getUserEmailId()).isEmpty() )
+        {
+            throw new ApiException("User already exist with email id: "+ user.getUserEmailId());
+        }
+
+        if(userRepository.findByUserMobileNo(user.getUserMobileNo())!=null)
+        {
+            throw new ApiException("User already exist with mobile No: "+user.getUserMobileNo());
+        }
+
         if(role == "seller")
         {
             User seller = userRepository.save(user);

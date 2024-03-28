@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +25,11 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
+
 
 @Entity
 public class User implements UserDetails {
@@ -31,25 +37,43 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
+
+    @NotEmpty(message = "Name should not be null")
     private String userName;
+
+    @Column(unique = true)
+    @NotEmpty(message = "Mobile no should not be null")
     private String userMobileNo;
+
+    @Column(unique = true)
+    @Email(message = "Email is not valid")
+    @NotEmpty(message = "Email id should not be empty")
     private String userEmailId;
+
+    
+    @NotEmpty(message = "Password should not be null")
     private String userPassword;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ROLE", joinColumns = {@JoinColumn(name = "USER_ID")}, inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
     private Set<Role> roles = new HashSet<>();
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "cart-user")
     private Cart cart;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "order-user")
     private List<Order> order;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "address-user")
     private List<Address> address;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "wishlist-user")
     private WishList wishList;
+
     @OneToMany(mappedBy = "user")
     @JsonManagedReference(value = "productreview-user")
     private List<ProductReview> review;

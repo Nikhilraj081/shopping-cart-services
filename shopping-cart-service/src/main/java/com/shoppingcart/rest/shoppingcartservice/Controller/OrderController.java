@@ -17,6 +17,8 @@ import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundExce
 import com.shoppingcart.rest.shoppingcartservice.Model.Order;
 import com.shoppingcart.rest.shoppingcartservice.Services.OrderService;
 
+import jakarta.validation.Valid;
+
 @RequestMapping("/orders")
 @RestController
 public class OrderController {
@@ -32,7 +34,7 @@ public class OrderController {
     }
 
     @PostMapping("/user/{userId}/cart/{cartId}")
-    public ResponseEntity<?> createOrder(@PathVariable("userId") int userId, @PathVariable("cartId") int cartId) throws ResourceNotFoundException, ApiException
+    public ResponseEntity<?> createOrder(@Valid @PathVariable("userId") int userId, @PathVariable("cartId") int cartId) throws ResourceNotFoundException, ApiException
     {
         List<Order> orderDetails = orderService.createOrder(userId, cartId);
         return ResponseEntity.status(HttpStatus.CREATED).body(orderDetails);

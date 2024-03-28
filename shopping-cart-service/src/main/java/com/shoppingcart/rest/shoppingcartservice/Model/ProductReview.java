@@ -14,11 +14,15 @@ public class ProductReview {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     private String comment;
+
     private double star;
+
     @ManyToOne
     @JsonBackReference(value = "productreview-product")
     private Product product;
+    
     @ManyToOne
     @JsonBackReference(value = "productreview-user")
     private User user;

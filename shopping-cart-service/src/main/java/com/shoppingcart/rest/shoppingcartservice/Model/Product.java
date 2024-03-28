@@ -14,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Product {
@@ -21,34 +22,54 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int productId;
+
+    @NotEmpty(message = "Product name should not be empty")
     private String productName;
+
+    @NotEmpty(message = "Product category should not be empty")
     private String productCategory;
+
+    @NotEmpty(message = "Product sub category should not be empty")
     private String productSubCategory;
+
+    @NotEmpty(message = "Product price should not be empty")
     private double price;
+
+    @NotEmpty(message = "Product stock should not be empty")
     private int stock;
+
     private double discount;
+
     private double specialPrice;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JsonBackReference(value = "product-image")
     private List<ProductImage> productImage;
+
     @ManyToOne
     @JsonBackReference(value = "product-seller")
     private Seller seller;
+
     @OneToMany(mappedBy = "product")//, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
     @JsonBackReference(value = "cartitem-product")
     private List<CartItem> cartItem;
+
     @OneToMany(mappedBy = "product")
     @JsonBackReference(value = "wishlist-product")
     private List<WishListItem> wishListItem;
+
     @OneToMany(mappedBy = "product")
     @JsonManagedReference(value = "order-product")
     private List<Order> order;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "productcolor-product")
     private List<ProductColor> color;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "productsize-product")
     private List<ProductSize> size;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "productreview-product")
     private List<ProductReview> review;
