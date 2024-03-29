@@ -12,7 +12,7 @@ Clone this repository in your local system
 ```bash
   git clone https://github.com/Nikhilraj081/shopping-cart-services.git
 ```
-Go to shopping-cart-service/Database folder and import database in your local MYSQL database and change MYSQL username and password in application.properties file:
+Create a database in mysql with name "shopping_cart" then go to shopping-cart-service/Database folder and import shopping_cart_database folder in your local MYSQL database and change MYSQL username and password in application.properties file:
 ```bash
   spring.datasource.username=XXXX
   spring.datasource.password=XXXX

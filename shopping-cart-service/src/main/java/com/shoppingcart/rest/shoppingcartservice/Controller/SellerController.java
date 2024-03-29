@@ -31,7 +31,7 @@ public class SellerController {
         return ResponseEntity.status(HttpStatus.OK).body(seller);
     }
 
-    @PostMapping("/seller")
+    @PostMapping("/register")
     public ResponseEntity<?> setSeller(@Valid @RequestBody Seller seller) throws ApiException
     {
         Seller newSeller = sellerService.setSeller(seller);

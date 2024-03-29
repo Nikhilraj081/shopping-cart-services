@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Product {
@@ -32,10 +33,10 @@ public class Product {
     @NotEmpty(message = "Product sub category should not be empty")
     private String productSubCategory;
 
-    @NotEmpty(message = "Product price should not be empty")
+    @NotNull(message = "Product price should not be null")
     private double price;
 
-    @NotEmpty(message = "Product stock should not be empty")
+    @NotNull(message = "Product stock should not be null")
     private int stock;
 
     private double discount;

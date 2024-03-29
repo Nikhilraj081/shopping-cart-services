@@ -9,4 +9,8 @@ import com.shoppingcart.rest.shoppingcartservice.Model.Seller;
 public interface SellerRepository extends JpaRepository<Seller,Integer> {
 
     public Seller findById(int id);
+
+    public Seller findBySellerEmailId(String emailId);
+
+    public Seller findBySellerMobileNo(String mobileNo);
 }

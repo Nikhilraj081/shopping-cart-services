@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Address {
@@ -22,7 +23,7 @@ public class Address {
     @NotEmpty(message = "Phone no should not be empty")
     private String phoneNo;;
 
-    @NotEmpty(message = "Pincode should not be empty")
+    @NotNull(message = "Pincode should not be empty")
     private int pinCode;
 
     @NotEmpty(message = "State should not be empty")

@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class CartItem {
@@ -24,11 +25,11 @@ public class CartItem {
     @ManyToOne
     @JsonBackReference(value = "cartitem-cart")
     private Cart cart;
-    
+
     @ManyToOne
     private Product product;
 
-    @NotEmpty(message = "cartItem quantity shoud not be empty or null")
+    @NotNull(message = "cartItem quantity shoud not be empty or null")
     private int quantity;
 
     public CartItem(int cartItemId, Cart cart, Product product, int quantity) {

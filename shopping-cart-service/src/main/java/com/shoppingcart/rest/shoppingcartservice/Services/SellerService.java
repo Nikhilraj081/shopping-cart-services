@@ -32,6 +32,18 @@ public class SellerService {
 
     public Seller setSeller(Seller seller) throws ApiException
     {
+        if(sellerRepository.findBySellerEmailId(seller.getSellerEmailId())!=null)
+        {
+            throw new ApiException("Seller already exist with email id: "+ seller.getSellerEmailId());
+        }
+
+        if(sellerRepository.findBySellerMobileNo(seller.getSellerMobileNo())!=null)
+        {
+            throw new ApiException("Seller already exist with mobile No: "+ seller.getSellerMobileNo());
+        }
+
+        Seller newsSeller = sellerRepository.save(seller);
+        
         User user = new User();
         user.setUserEmailId(seller.getSellerEmailId());
         user.setUserMobileNo(seller.getSellerMobileNo());
@@ -39,12 +51,6 @@ public class SellerService {
         user.setUserPassword(seller.getSellerPassword());
 
         userService.setUser(user, role);
-        
-        Seller newsSeller = null;
-        if(seller!=null)
-        {
-           newsSeller = sellerRepository.save(seller);
-        }
         return newsSeller;
     }
 }
