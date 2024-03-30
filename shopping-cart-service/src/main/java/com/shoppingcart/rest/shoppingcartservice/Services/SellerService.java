@@ -3,6 +3,7 @@ package com.shoppingcart.rest.shoppingcartservice.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shoppingcart.rest.shoppingcartservice.Configuration.Constants;
 import com.shoppingcart.rest.shoppingcartservice.Dao.SellerRepository;
 import com.shoppingcart.rest.shoppingcartservice.Exceptions.ApiException;
 import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundException;
@@ -17,8 +18,6 @@ public class SellerService {
 
     @Autowired
     UserService userService;
-
-    private static final String role = "seller";
 
     public Seller getSellerById(int id) throws ResourceNotFoundException
     {
@@ -43,14 +42,14 @@ public class SellerService {
         }
 
         Seller newsSeller = sellerRepository.save(seller);
-        
+
         User user = new User();
         user.setUserEmailId(seller.getSellerEmailId());
         user.setUserMobileNo(seller.getSellerMobileNo());
         user.setUserName(seller.getSellerName());
         user.setUserPassword(seller.getSellerPassword());
 
-        userService.setUser(user, role);
+        userService.setUser(user, Constants.SELLER_ROLE);
         return newsSeller;
     }
 }

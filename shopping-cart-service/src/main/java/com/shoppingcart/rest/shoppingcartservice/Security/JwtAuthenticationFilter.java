@@ -17,6 +17,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.shoppingcart.rest.shoppingcartservice.Configuration.Constants;
+
 import java.io.IOException;
 
 
@@ -35,12 +37,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //Authorization
 
-        String requestHeader = request.getHeader("Authorization");
+        String requestHeader = request.getHeader(Constants.Auth_HEADER);
         //Bearer 2352345235sdfrsfgsdfsdf
         logger.info(" Header :  {}", requestHeader);
         String username = null;
         String token = null;
-        if (requestHeader != null && requestHeader.startsWith("Bearer")) {
+        if (requestHeader != null && requestHeader.startsWith(Constants.JWT_TOKEN_PREFIX)) {
             //looking good
             token = requestHeader.substring(7);
             try {
@@ -48,14 +50,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 username = this.jwtHelper.getUsernameFromToken(token);
 
             } catch (IllegalArgumentException e) {
+
                 logger.info("Illegal Argument while fetching the username !!");
                 e.printStackTrace();
+
             } catch (ExpiredJwtException e) {
+
                 logger.info("Given jwt token is expired !!");
                 e.printStackTrace();
+
             } catch (MalformedJwtException e) {
+
                 logger.info("Some changed has done in token !! Invalid Token");
                 e.printStackTrace();
+                
             } catch (Exception e) {
                 e.printStackTrace();
 
