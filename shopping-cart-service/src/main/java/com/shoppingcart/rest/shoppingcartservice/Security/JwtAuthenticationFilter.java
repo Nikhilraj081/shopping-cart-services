@@ -38,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         //Authorization
 
         String requestHeader = request.getHeader(Constants.Auth_HEADER);
-        //Bearer 2352345235sdfrsfgsdfsdf
+    
         logger.info(" Header :  {}", requestHeader);
         String username = null;
         String token = null;
@@ -63,7 +63,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 logger.info("Some changed has done in token !! Invalid Token");
                 e.printStackTrace();
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
 
@@ -73,7 +73,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } else {
             logger.info("Invalid Header Value !! ");
         }
-        //
+
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
 

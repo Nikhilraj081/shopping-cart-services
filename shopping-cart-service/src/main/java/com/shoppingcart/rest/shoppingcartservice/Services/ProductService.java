@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ import com.shoppingcart.rest.shoppingcartservice.Model.ProductImage;
 
 @Service
 public class ProductService {
+
+    private Logger logger = LoggerFactory.getLogger(ProductService.class);
 
     @Autowired
     ProductRepository productRepository;
@@ -34,9 +38,11 @@ public class ProductService {
 
     public List<Product> getAllProduct() throws ResourceNotFoundException
     {
+        logger.info("Retriving data from Database");
         List<Product> product = productRepository.findAll();
         if(product != null)
         {
+            logger.info("Data retrived successfully");
             return product;
         }
 
@@ -45,9 +51,11 @@ public class ProductService {
 
     public Product getProductById(int id) throws ResourceNotFoundException
     {
+        logger.info("Retriving data from Database");
         Product product = productRepository.findById(id);
         if(product != null)
         {
+            logger.info("Data retrived successfully");
             return product;
         }
 
@@ -56,9 +64,11 @@ public class ProductService {
 
     public List<Product> getProductByCategory(String category) throws ResourceNotFoundException
     {
+        logger.info("Retriving data from Database");
         List<Product> product = productRepository.findByProductCategory(category);
         if(product != null)
         {
+            logger.info("Data retrived successfully");
             return product;
         }
 
@@ -67,9 +77,11 @@ public class ProductService {
 
     public List<Product> getProductBySubCategory(String subCategory) throws ResourceNotFoundException
     {
+        logger.info("Retriving data from Database");
         List<Product> product = productRepository.findByProductSubCategory(subCategory);
         if(product != null)
         {
+            logger.info("Data retrived successfully");
             return product;
         }
 
@@ -81,6 +93,7 @@ public class ProductService {
         product.setSpecialPrice(product.getPrice() - product.getDiscount());
         product.setSeller(sellerService.getSellerById(sellerId));
         Product newProduct = productRepository.save(product);
+        logger.info("Product added to Database");
 
         //to save image in folder and database
         for (MultipartFile multipartFile : image)
@@ -106,6 +119,7 @@ public class ProductService {
             productImage.setProduct(product);
     
             productImageRepository.save(productImage);
+            logger.info("product image added to database");
 
         }
 
@@ -114,12 +128,13 @@ public class ProductService {
 
     public List<Product> searchByName(String keyword) throws ResourceNotFoundException
     {
-       List<Product> product = productRepository.findByProductNameContaining(keyword);
-       if(product == null)
-       {
+        logger.info("Searching product");
+        List<Product> product = productRepository.findByProductNameContaining(keyword);
+        if(product == null)
+        {
             throw new ResourceNotFoundException(keyword);
-       }
-
-       return product;
+        }
+        logger.info("Data retrived from database");
+        return product;
     }
 }

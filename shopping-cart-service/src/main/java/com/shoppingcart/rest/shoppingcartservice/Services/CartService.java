@@ -2,6 +2,8 @@ package com.shoppingcart.rest.shoppingcartservice.Services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ import com.shoppingcart.rest.shoppingcartservice.Model.User;
 
 @Service
 public class CartService {
+
+    private Logger logger = LoggerFactory.getLogger(CartService.class);
 
     @Autowired
     CartRepository cartRepository;
@@ -61,6 +65,7 @@ public class CartService {
         cart.setDiscount(cart.getDiscount() + product.getDiscount());
         cartRepository.save(cart);
 
+        logger.info("Product added to cart");
         return newCartItem2;
     }
 
@@ -91,6 +96,7 @@ public class CartService {
         cart.setDiscount(cart.getDiscount() + (newQuantity * product.getDiscount()));
         cartRepository.save(cart);
         
+        logger.info("Product quantity updated");
         return newCartItem;
     }
 
@@ -112,14 +118,17 @@ public class CartService {
        
         cartItemRepository.deleteById(cartItem.getCartItemId());
 
+        logger.info("Removed product from cart");
         return cart;
     }
 
     public Cart getCartByUserId(int userId) throws ResourceNotFoundException
     {
+        logger.info("Retriving data from Database");
         Cart cart =  cartRepository.findByUserUserId(userId);;
         if(cart != null)
         {
+            logger.info("Data retrived successfully");
             return cart;
         }
         throw new ResourceNotFoundException("cart not found with user id: "+userId);
@@ -132,14 +141,17 @@ public class CartService {
         {
             cart = cartRepository.save(cart);
         }
+        logger.info("Cart created");
         return newCart;
     }
 
     public Cart getCartById(int id) throws ResourceNotFoundException
     {
+        logger.info("Retriving data from Database");
         Cart cart = cartRepository.findById(id);
         if(cart != null)
         {
+            logger.info("Data retrived successfully");
             return cart;
         }
         
@@ -148,9 +160,11 @@ public class CartService {
 
     public CartItem getCartItemById(int id) throws ResourceNotFoundException
     {
+        logger.info("Retriving data from Database");
         CartItem cartItem = cartItemRepository.findById(id);
         if(cartItem != null)
         {
+            logger.info("Retriving data from Database");
             return cartItem;
         }
         
@@ -159,9 +173,11 @@ public class CartService {
 
     public CartItem getCartItemByCartIdAndProductId(int cartId, int productId) throws ResourceNotFoundException
     {
+        logger.info("Retriving data from Database");
         CartItem cartItem = cartItemRepository.findByCartCartIdAndProductProductId(cartId, productId);
         if(cartItem != null)
         {
+            logger.info("Retriving data from Database");
             return cartItem;
         }
         

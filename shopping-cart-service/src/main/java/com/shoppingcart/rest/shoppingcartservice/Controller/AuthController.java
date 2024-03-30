@@ -20,6 +20,7 @@ import com.shoppingcart.rest.shoppingcartservice.Model.JwtRequest;
 import com.shoppingcart.rest.shoppingcartservice.Model.JwtResponse;
 import com.shoppingcart.rest.shoppingcartservice.Model.User;
 import com.shoppingcart.rest.shoppingcartservice.Security.JwtHelper;
+import com.shoppingcart.rest.shoppingcartservice.Services.AuthService;
 import com.shoppingcart.rest.shoppingcartservice.Services.UserService;
 
 import jakarta.validation.Valid;
@@ -29,39 +30,22 @@ import jakarta.validation.Valid;
 public class AuthController {
 
     @Autowired
+    private AuthService authService;
+
+    @Autowired
     private UserDetailsService userDetailsService;
 
     @Autowired
     private UserService userService;
 
     @Autowired
-    private AuthenticationManager manager;
-
-
-    @Autowired
-    private JwtHelper helper;
-
-    @Autowired
-    JwtResponse response;
-
-    @Autowired
     BCryptPasswordEncoder passwordEncoder;
-
-    private Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request)
     {
-        logger.info(request.getEmail());
-        logger.info(request.getPassword());
-        this.doAuthenticate(request.getEmail(), request.getPassword());
+        JwtResponse response = authService.authenticate(request);
 
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
-        String token = this.helper.generateToken(userDetails);
-
-                response.setJwtToken(token);
-                response.setUserName(userDetails.getUsername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -71,22 +55,5 @@ public class AuthController {
         User userDetails = userService.setUser(user,Constants.USER_ROLE);
       
         return ResponseEntity.status(HttpStatus.CREATED).body(userDetails);
-    }
-
-    private void doAuthenticate(String email, String password) {
-
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
-        try {
-            manager.authenticate(authentication);
-
-        } catch (BadCredentialsException e) {
-            throw new BadCredentialsException(" Invalid Username or Password  !!");
-        }
-
-    }
-
-    @ExceptionHandler(BadCredentialsException.class)
-    public String exceptionHandler() {
-        return "Credentials Invalid !!";
     }
 }

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import com.shoppingcart.rest.shoppingcartservice.Model.Order;
 
 @Service
 public class OrderService {
+
+    Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     @Autowired
     OrderRepository orderRepository;
@@ -33,9 +37,11 @@ public class OrderService {
 
     public Order getOrderById(int id) throws ResourceNotFoundException
     {
+        logger.info("Retriving data from database");
         Order order = orderRepository.findById(id);
         if(order != null)
         {
+            logger.info("Data retrived successfully");
             return order;
         }
 
@@ -65,6 +71,7 @@ public class OrderService {
                 cartService.deleteProductFromCart(userId, order.getProduct().getProductId());
                 newOrder.add(order);
             }
+            logger.info("Order created");
             return newOrder;
         } 
 
