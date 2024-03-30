@@ -1,7 +1,5 @@
 package com.shoppingcart.rest.shoppingcartservice.Services;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundExce
 import com.shoppingcart.rest.shoppingcartservice.Model.Cart;
 import com.shoppingcart.rest.shoppingcartservice.Model.CartItem;
 import com.shoppingcart.rest.shoppingcartservice.Model.Product;
-import com.shoppingcart.rest.shoppingcartservice.Model.User;
 
 @Service
 public class CartService {

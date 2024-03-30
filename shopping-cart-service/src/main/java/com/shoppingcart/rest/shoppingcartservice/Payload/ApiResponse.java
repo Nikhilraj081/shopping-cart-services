@@ -1,7 +1,5 @@
 package com.shoppingcart.rest.shoppingcartservice.Payload;
 
-import org.springframework.http.HttpStatus;
-
 public class ApiResponse {
 
     private String message;

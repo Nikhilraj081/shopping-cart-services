@@ -1,13 +1,5 @@
 package com.shoppingcart.rest.shoppingcartservice.Configuration;
 
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-
-import javax.crypto.spec.SecretKeySpec;
-
-import io.jsonwebtoken.security.Keys;
-
-
 public class Constants {
 
     public static final String SELLER_ROLE = "seller";
