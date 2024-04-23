@@ -18,9 +18,11 @@ import com.shoppingcart.rest.shoppingcartservice.Model.Address;
 import com.shoppingcart.rest.shoppingcartservice.Model.User;
 import com.shoppingcart.rest.shoppingcartservice.Services.UserService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/users")
 public class UserController {
 

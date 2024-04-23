@@ -14,7 +14,10 @@ import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundExce
 import com.shoppingcart.rest.shoppingcartservice.Model.WishList;
 import com.shoppingcart.rest.shoppingcartservice.Services.WishListService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/wishlists")
 public class WishlistController {
 

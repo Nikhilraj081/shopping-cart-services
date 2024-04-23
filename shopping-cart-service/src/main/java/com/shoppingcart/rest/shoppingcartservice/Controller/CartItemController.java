@@ -12,7 +12,10 @@ import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundExce
 import com.shoppingcart.rest.shoppingcartservice.Model.CartItem;
 import com.shoppingcart.rest.shoppingcartservice.Services.CartService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/cartitem")
 public class CartItemController {
 

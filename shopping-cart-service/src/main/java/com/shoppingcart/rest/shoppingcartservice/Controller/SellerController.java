@@ -15,9 +15,11 @@ import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundExce
 import com.shoppingcart.rest.shoppingcartservice.Model.Seller;
 import com.shoppingcart.rest.shoppingcartservice.Services.SellerService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/sellers")
 public class SellerController {
 

@@ -16,10 +16,12 @@ import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundExce
 import com.shoppingcart.rest.shoppingcartservice.Model.Order;
 import com.shoppingcart.rest.shoppingcartservice.Services.OrderService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
-@RequestMapping("/orders")
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
+@RequestMapping("/orders")
 public class OrderController {
 
     @Autowired
