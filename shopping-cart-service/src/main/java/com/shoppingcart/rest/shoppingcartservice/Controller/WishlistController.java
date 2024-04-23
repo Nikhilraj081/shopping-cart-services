@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundException;
 import com.shoppingcart.rest.shoppingcartservice.Model.WishList;
+import com.shoppingcart.rest.shoppingcartservice.Model.WishListItem;
 import com.shoppingcart.rest.shoppingcartservice.Services.WishListService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -31,10 +32,10 @@ public class WishlistController {
         return ResponseEntity.status(HttpStatus.OK).body(wishList);
     }
 
-    @PostMapping("/user/wishlist")
-    public ResponseEntity<?> setWishList(@RequestBody WishList wishList)
+    @PostMapping("/user/{id}/product/{productId}")
+    public ResponseEntity<?> setWishList(@PathVariable("id") int id, @PathVariable("productId") int productId)
     {
-        WishList neWishList = wishListService.setWishList(wishList);
+        WishListItem neWishList = wishListService.setWishList(id, productId);
         return ResponseEntity.status(HttpStatus.CREATED).body(neWishList);  
     }
 
