@@ -1,8 +1,11 @@
 package com.shoppingcart.rest.shoppingcartservice.Controller;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundException;
 import com.shoppingcart.rest.shoppingcartservice.Model.Product;
+import com.shoppingcart.rest.shoppingcartservice.Payload.ProductDto;
 import com.shoppingcart.rest.shoppingcartservice.Services.ProductService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -30,15 +34,21 @@ import jakarta.validation.Valid;
 public class ProductController {
 
     @Autowired
-    ProductService productService;
+    private ProductService productService;
     
     @Autowired
     private ObjectMapper mapper;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
+   
+
     @GetMapping("/all")
     public ResponseEntity<?> getAllProduct() throws ResourceNotFoundException
     {
-        List<Product> product = productService.getAllProduct();
+        Type listType = new TypeToken<List<ProductDto>>(){}.getType();
+        List<ProductDto> product = modelMapper.map(productService.getAllProduct(),listType);
         return ResponseEntity.status(HttpStatus.OK).body(product);
        
     }
@@ -46,21 +56,23 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getProductById(@PathVariable("id") int id) throws ResourceNotFoundException
     {
-        Product product = productService.getProductById(id);
+        ProductDto product = modelMapper.map(productService.getProductById(id),ProductDto.class);
         return ResponseEntity.status(HttpStatus.OK).body(product);
     }
 
     @GetMapping("/category/{category}")
     public ResponseEntity<?> getProductBycategory(@PathVariable("category") String category) throws ResourceNotFoundException
     {
-        List<Product> product = productService.getProductByCategory(category);
+        Type listType = new TypeToken<List<ProductDto>>(){}.getType();
+        List<ProductDto> product = modelMapper.map(productService.getProductByCategory(category),listType);
         return ResponseEntity.status(HttpStatus.OK).body(product);
     }
 
     @GetMapping("/subcategory/{category}")
     public ResponseEntity<?> getProductBySubCategory(@PathVariable("category") String category) throws ResourceNotFoundException
     {
-        List<Product> product = productService.getProductBySubCategory(category);
+        Type listType = new TypeToken<List<ProductDto>>(){}.getType();
+        List<ProductDto> product = modelMapper.map(productService.getProductBySubCategory(category), listType);
         return ResponseEntity.status(HttpStatus.OK).body(product); 
     }
 
@@ -84,9 +96,10 @@ public class ProductController {
     }
 
     @GetMapping("/search/{keyword}")
-    public ResponseEntity<?> searchProduct(@PathVariable("keyword") String keyword) throws ResourceNotFoundException {
-
-        List<Product> product = productService.searchByName(keyword);
+    public ResponseEntity<?> searchProduct(@PathVariable("keyword") String keyword) throws ResourceNotFoundException
+    {
+        Type listType = new TypeToken<List<ProductDto>>(){}.getType();
+        List<ProductDto> product = modelMapper.map(productService.searchByName(keyword), listType);
 
         return ResponseEntity.status(HttpStatus.OK).body(product);
     }

@@ -62,9 +62,9 @@ public class UserController {
     }
 
     @PutMapping("user/update")
-    public ResponseEntity<?> updateUser(@Valid @RequestBody User user) throws ResourceNotFoundException
+    public ResponseEntity<?> updateUser(@Valid @RequestBody UserDto user) throws ResourceNotFoundException
     {
-        User newUser = userService.UpdateUser(user);
+        User newUser = userService.UpdateUser(modelMapper.map(user,User.class));
         return ResponseEntity.status(HttpStatus.OK).body(newUser);
     }
 

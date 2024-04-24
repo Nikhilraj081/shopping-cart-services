@@ -2,26 +2,20 @@ package com.shoppingcart.rest.shoppingcartservice.Payload;
 
 import java.util.Calendar;
 
-import com.shoppingcart.rest.shoppingcartservice.Model.Product;
-import com.shoppingcart.rest.shoppingcartservice.Model.User;
-
 public class OrderDto {
 
     private long orderId;
 
-    private User user;
-
     private Calendar date;
 
-    private Product product;
+    private ProductDto product;
 
     private int quantity;
 
     private double price;
 
-    public OrderDto(long orderId, User user, Calendar date, Product product, int quantity, double price) {
+    public OrderDto(long orderId, Calendar date, ProductDto product, int quantity, double price) {
         this.orderId = orderId;
-        this.user = user;
         this.date = date;
         this.product = product;
         this.quantity = quantity;
@@ -39,14 +33,6 @@ public class OrderDto {
         this.orderId = orderId;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Calendar getDate() {
         return date;
     }
@@ -55,11 +41,11 @@ public class OrderDto {
         this.date = date;
     }
 
-    public Product getProduct() {
+    public ProductDto getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(ProductDto product) {
         this.product = product;
     }
 

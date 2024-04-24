@@ -2,6 +2,7 @@ package com.shoppingcart.rest.shoppingcartservice.Controller;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shoppingcart.rest.shoppingcartservice.Exceptions.ApiException;
 import com.shoppingcart.rest.shoppingcartservice.Exceptions.ResourceNotFoundException;
 import com.shoppingcart.rest.shoppingcartservice.Model.Order;
+import com.shoppingcart.rest.shoppingcartservice.Payload.OrderDto;
 import com.shoppingcart.rest.shoppingcartservice.Services.OrderService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -25,12 +27,15 @@ import jakarta.validation.Valid;
 public class OrderController {
 
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrder(@PathVariable("id") int id) throws ResourceNotFoundException
     {
-        Order order = orderService.getOrderById(id);
+        OrderDto order = modelMapper.map(orderService.getOrderById(id), OrderDto.class);
         return ResponseEntity.status(HttpStatus.OK).body(order);
     }
 

@@ -26,8 +26,6 @@ public class ProductDto {
 
     private List<ProductImage> productImage;
    
-    private Seller seller;
-
     private String color;
 
     private String size;
@@ -36,7 +34,7 @@ public class ProductDto {
 
     public ProductDto(int productId, String productName, String productCategory, String productSubCategory,
             double price, int stock, double discount, double specialPrice, List<ProductImage> productImage,
-            Seller seller, String color, String size, List<ProductReview> review) {
+            String color, String size, List<ProductReview> review) {
         this.productId = productId;
         this.productName = productName;
         this.productCategory = productCategory;
@@ -46,7 +44,6 @@ public class ProductDto {
         this.discount = discount;
         this.specialPrice = specialPrice;
         this.productImage = productImage;
-        this.seller = seller;
         this.color = color;
         this.size = size;
         this.review = review;
@@ -125,14 +122,6 @@ public class ProductDto {
 
     public void setProductImage(List<ProductImage> productImage) {
         this.productImage = productImage;
-    }
-
-    public Seller getSeller() {
-        return seller;
-    }
-
-    public void setSeller(Seller seller) {
-        this.seller = seller;
     }
 
     public String getColor() {

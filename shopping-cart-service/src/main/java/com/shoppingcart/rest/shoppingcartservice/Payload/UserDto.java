@@ -33,7 +33,7 @@ public class UserDto {
     private Set<Role> roles = new HashSet<>();
 
     @Schema(accessMode = AccessMode.READ_ONLY)
-    private List<Address> address;
+    private List<AddressDto> address;
 
 
     public UserDto() {
@@ -41,7 +41,7 @@ public class UserDto {
 
 
     public UserDto(int userId, String userName, String userMobileNo, String userEmailId, String userPassword,
-            Set<Role> roles, List<Address> address) {
+            Set<Role> roles, List<AddressDto> address) {
         this.userId = userId;
         this.userName = userName;
         this.userMobileNo = userMobileNo;
@@ -112,12 +112,12 @@ public class UserDto {
     }
 
 
-    public List<Address> getAddress() {
+    public List<AddressDto> getAddress() {
         return address;
     }
 
 
-    public void setAddress(List<Address> address) {
+    public void setAddress(List<AddressDto> address) {
         this.address = address;
     }
 

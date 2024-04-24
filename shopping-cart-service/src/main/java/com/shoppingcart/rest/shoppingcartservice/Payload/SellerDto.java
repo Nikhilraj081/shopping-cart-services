@@ -1,5 +1,8 @@
 package com.shoppingcart.rest.shoppingcartservice.Payload;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
+
 public class SellerDto {
 
     private String sellerName;
@@ -12,16 +15,30 @@ public class SellerDto {
    
     private String sellerMobileNo;
 
+    @Schema(accessMode = AccessMode.WRITE_ONLY)
+    private String sellerPassword;
 
-    public SellerDto(String sellerName, String sellerAddress, String sellerEmailId, String sellerMobileNo) {
+    public SellerDto(String sellerName, String sellerAddress, String sellerEmailId, String sellerMobileNo,
+            String sellerPassword) {
         this.sellerName = sellerName;
         this.sellerAddress = sellerAddress;
         this.sellerEmailId = sellerEmailId;
         this.sellerMobileNo = sellerMobileNo;
+        this.sellerPassword = sellerPassword;
     }
 
 
     public SellerDto() {
+    }
+
+
+    public String getSellerPassword() {
+        return sellerPassword;
+    }
+
+
+    public void setSellerPassword(String sellerPassword) {
+        this.sellerPassword = sellerPassword;
     }
 
 
