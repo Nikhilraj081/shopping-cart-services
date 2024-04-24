@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.shoppingcart.rest.shoppingcartservice.Payload.ApiResponse;
 
+import jakarta.validation.ConstraintViolationException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -33,13 +35,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> methodArgumentNotValidException(MethodArgumentNotValidException ex)
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Map<String, String>> methodArgumentNotValidException(ConstraintViolationException ex)
     {
         Map<String, String> response = new HashMap<>();
-         ex.getBindingResult().getAllErrors().forEach(error -> {
-            String fieldName = ((FieldError) error).getField();
-            String message = error.getDefaultMessage();
+         ex.getConstraintViolations().forEach(error -> {
+            String fieldName = error.getPropertyPath().toString();
+            String message = error.getMessageTemplate(); 
             response.put(fieldName, message);
          });
 

@@ -61,13 +61,10 @@ public class Product {
     @JsonManagedReference(value = "order-product")
     private List<Order> order;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    @JsonManagedReference(value = "productcolor-product")
-    private List<ProductColor> color;
+    @NotEmpty(message = "Product color should not be empty")
+    private String color;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    @JsonManagedReference(value = "productsize-product")
-    private List<ProductSize> size;
+    private String size;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "productreview-product")
@@ -75,8 +72,8 @@ public class Product {
 
     public Product(int productId, String productName, String productCategory, String productSubCategory, double price,
             int stock, double discount, double specialPrice, List<ProductImage> productImage, Seller seller,
-            List<CartItem> cartItem, List<WishListItem> wishListItem, List<Order> order, List<ProductColor> color,
-            List<ProductSize> size, List<ProductReview> review) {
+            List<CartItem> cartItem, List<WishListItem> wishListItem, List<Order> order, String color,
+            String size, List<ProductReview> review) {
         this.productId = productId;
         this.productName = productName;
         this.productCategory = productCategory;
@@ -110,22 +107,22 @@ public class Product {
     }
 
 
-    public List<ProductColor> getColor() {
+    public String getColor() {
         return color;
     }
 
 
-    public void setColor(List<ProductColor> color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
 
-    public List<ProductSize> getSize() {
+    public String getSize() {
         return size;
     }
 
 
-    public void setSize(List<ProductSize> size) {
+    public void setSize(String size) {
         this.size = size;
     }
 

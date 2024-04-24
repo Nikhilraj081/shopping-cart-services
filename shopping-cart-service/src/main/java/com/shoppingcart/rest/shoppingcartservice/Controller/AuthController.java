@@ -1,6 +1,7 @@
 package com.shoppingcart.rest.shoppingcartservice.Controller;
 
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import com.shoppingcart.rest.shoppingcartservice.Exceptions.ApiException;
 import com.shoppingcart.rest.shoppingcartservice.Model.JwtRequest;
 import com.shoppingcart.rest.shoppingcartservice.Model.JwtResponse;
 import com.shoppingcart.rest.shoppingcartservice.Model.User;
+import com.shoppingcart.rest.shoppingcartservice.Payload.UserDto;
 import com.shoppingcart.rest.shoppingcartservice.Services.AuthService;
 import com.shoppingcart.rest.shoppingcartservice.Services.UserService;
 
@@ -35,7 +37,10 @@ public class AuthController {
     private UserService userService;
 
     @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request)
@@ -46,9 +51,9 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> userRegister(@Valid @RequestBody User user) throws ApiException
+    public ResponseEntity<?> userRegister(@Valid @RequestBody UserDto user) throws ApiException
     {
-        User userDetails = userService.setUser(user,Constants.USER_ROLE);
+        User userDetails = userService.setUser(modelMapper.map(user,User.class),Constants.USER_ROLE);
       
         return ResponseEntity.status(HttpStatus.CREATED).body(userDetails);
     }
